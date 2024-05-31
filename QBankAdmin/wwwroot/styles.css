@@ -1,0 +1,142 @@
+﻿@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+:root {
+    --primary-color: #ae2a30;
+    --secondary-color: #f7f7f7;
+    --tertiary-color: #333;
+    --border-radius: 4px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+    background-color: #808080;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    font-size: 1.6rem;
+    line-height: 1.6;
+    color: #333;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 1rem 0;
+    padding: 20px;
+    box-shadow: 0 20px 20px rgba(0, 0, 0, 0.1);
+}
+
+    .header nav ul {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        list-style: none;
+    }
+
+        .header nav ul li {
+            margin-right: 20px;
+        }
+
+            .header nav ul li a {
+                color: var(--secondary-color);
+                text-decoration: none;
+            }
+
+.container {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0 auto;
+    /*padding: 20px;*/
+    /*margin-top: 20px;*/
+    /* background-color: var(--tertiary-color); */
+}
+
+.container img {
+    width: 100%;
+    height: 350px;
+    display: block;
+    margin: 0 auto;
+}
+
+
+.container__turnos {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    width: 100%;
+   /* width: 100%;
+    height: 316px;
+    overflow-x: scroll;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;*/
+}
+
+.container__turnos-item {
+    display:flex;
+    flex-direction: column;
+
+    margin:1px 0px;
+
+    font-size:24px;
+    background:#333;
+    color:#f7f7f7;
+    padding:16px;
+
+}
+
+.container__turnos-item p{
+    text-align:left;
+}
+
+.container__card {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    width: 100%;
+    max-width: 724px;
+    margin: 0 auto;
+    border-radius: var(--border-radius);
+    margin-top: 20px;
+    padding: 20px;
+    background-color: var(--tertiary-color);
+    color: var(--secondary-color);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar {
+    border-radius: 10px;
+    height: 4px;
+    background-color: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+
+.btn {
+    display: inline-block;
+    grid-column: 1/-1;
+    background-color: var(--primary-color);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+    color: var(--secondary-color);
+    font-size: 2rem;
+    border-radius: var(--border-radius);
+    border: none;
+    text-decoration: none;
+    margin-top: 20px;
+    padding: 10px 20px;
+}

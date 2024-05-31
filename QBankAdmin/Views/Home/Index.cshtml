@@ -1,0 +1,60 @@
+﻿@model QBankAdmin.Models.ViewModels.IndexViewModel
+@{
+
+    Layout = "MainLayout";
+}
+
+
+<div class="container">
+    @* <img src="~/images/queue-draw.svg" alt="Cola" /> *@
+
+
+    <div class="container__turnos-item">
+        <h2>Atendiendo</h2>
+        <p>1</p>
+    </div>
+
+    <div class="container__turnos">
+        @foreach (var item in Model.Turnos)
+        {
+            <div class="container__turnos-item">
+                <p>Turno: @item.CodigoTurno</p>
+            </div>
+        }
+    </div>
+
+ 
+</div>
+
+
+
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("https://qbank.websitos256.com/turno", {
+            skipNegotiation: true,
+            transport: signalR.HttpTransportType.WebSockets,
+        })
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+
+    async function start() {
+        try {
+            await connection.start();
+            console.log("SignalR Connected.");
+        } catch (err) {
+            console.log(err);
+            setTimeout(start, 5000);
+        }
+    };
+
+    connection.onclose(async () => {
+        await start();
+    });
+
+    connection.on("AddToQueue", (turno) => {
+        console.log(turno);
+    });
+
+    // Start the connection.
+    start();
+</script>
