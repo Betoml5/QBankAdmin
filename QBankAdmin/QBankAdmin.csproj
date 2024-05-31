@@ -19,6 +19,10 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\" />
+    <Folder Include="Areas\Operador\Controllers\" />
+    <Folder Include="Areas\Operador\Data\" />
+    <Folder Include="Areas\Operador\Models\" />
+    <Folder Include="Areas\Operador\Views\" />
   </ItemGroup>
 
   <ItemGroup>
