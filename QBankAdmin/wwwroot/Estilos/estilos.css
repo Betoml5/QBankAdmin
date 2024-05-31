@@ -1,0 +1,242 @@
+html{
+    padding: 0px;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+nav{
+    background-color:  #ae2a30;
+    width: 100%;
+    position: fixed;
+    top: 0;   
+    left: 0;
+    padding: 10px 20px;
+    box-shadow: 0 0 5px 0 black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+nav h1{
+    margin: 0;color: white;
+}
+
+nav a{
+    margin: 0;
+    text-decoration: none;
+    color: white;
+    padding: 0 20px;
+    margin: 0;
+    width: 10%; 
+}
+
+main{
+    width: 70%;
+    margin: 7% auto 0 auto;
+}
+
+.errores{
+    color: red;
+    text-align: center;
+}
+
+.sctPrincipal{
+    gap: 10px;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+}
+
+section{
+ padding: 10px;
+}
+
+section h3{
+    margin: 0;
+    text-align: center;
+}
+
+a{
+    text-decoration: none;
+}
+
+#aAgregar{
+    background-color: #ae2a30;
+    color: #f7f7f7;
+    display: block;
+    text-align: center;
+    padding: 5px;
+    border-radius: 4px;
+    box-sizing: border-box;
+} 
+
+#sctCajas{
+    background-color: #333;
+    border-radius: 4px;
+    color: #f7f7f7;
+}
+
+ol{
+    list-style: none;
+    overflow-y: auto;
+    height: 350px;
+    scrollbar-width: none; 
+    padding: 0;
+}
+
+li{ 
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin: 4px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+ }
+
+ li div span{
+    font-size:inherit;
+ }
+
+ li div:nth-child(1){
+    display: flex;
+    flex-direction: column; 
+ }
+
+ li div:nth-child(2){
+    width: 10%;
+    display: flex;
+    justify-content: space-between;
+ }
+
+ li a{
+    color: #f7f7f7;
+ }
+
+ li:hover {
+    transition: 1s;
+    background-color: beige;
+    color: #333;
+ }
+
+ li:hover a {
+    color: inherit;
+}
+
+#sctStats2{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-row: 1fr 1fr;
+    grid-template-areas: "uno dos tres" "cuatro cuatro cuatro";
+    gap: 4px;
+}
+
+.dvStat{
+    background-color: #333;
+    border-radius: 4px;
+    padding: 10px;
+    color: #f7f7f7;
+
+    box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.26);
+
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.dvStat:last-child{
+    grid-area: cuatro;
+}
+
+.dvStat i{
+    font-size: xx-large;
+    margin-bottom: 5px;
+}
+
+.dvStat label{
+    font-size: small;
+}
+
+.dvStat label:last-child{
+    color: white;
+    font-size: xx-large;
+}
+
+/* estilos crud */
+form{
+    background-color:#333;
+    margin: auto;
+    width: 50%;
+    padding: 20px;
+    border-radius: 4px;
+    gap: 10px; 
+    box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.26);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form p, form label{
+    text-align: center;
+    color: white;
+}
+
+form span{
+    font-weight: bold;
+}
+
+form h3{
+    color: #f7f7f7; 
+    margin:0 0 0 10px;   
+}
+
+input[type="text"],input[type="password"]{
+    border: lightgrey 1px;
+    width: 100%;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.dvBotones{
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+}
+
+.dvBotones input[type="submit"], .dvBotones a{
+    background-color: #ae2a30;
+    color: white;
+    border: 0;
+    border-radius: 4px;
+    padding: 5px;
+    width: 40%;
+    text-align: center; 
+    cursor: pointer;
+    display: inline-block;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: small;
+}
+
+/* .dvBotones a{
+    font-size: inherit;
+} */
+
+/*                            s i                                              */
+
+@media (max-width: 1024px) {
+    .sctPrincipal{
+        display: flex;
+        flex-direction: column;
+        margin-top: 20%;
+    }
+
+     li div:nth-child(2){
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
+ }
+
+ .dvBotones{
+      width: 90%;
+}
+}
