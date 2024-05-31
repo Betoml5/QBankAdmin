@@ -35,6 +35,8 @@
     const urlLocal = "https://localhost:5001/turno";
     const btnNext = document.getElementById("btnNext");
     const $turnoActual = document.querySelector(".container__operador-turnos-actual p");
+    const turnos = document.querySelectorAll(".container__operador-turnos-item");
+
     const connection = new signalR.HubConnectionBuilder()
         .withUrl(urlLocal, {
             skipNegotiation: true,
@@ -63,12 +65,20 @@
 
     connection.on("SetCurrentTurn", (turno, cajaId) => {
         console.log("turno", turno, "CajaId", cajaId)
-        $turnoActual.textContent = turno.codigoTurno;
+        $turnoActual.textContent = `Turno: ${turno}`;
+
+        turnos.forEach((item) => {
+            if (item.textContent.includes(turno)) {
+                item.remove();
+            }
+        });
     });
 
     btnNext.addEventListener("click", async () => {
         await connection.invoke("SetCurrentTurn", (1));
     });
+
+
 
     // Start the connection.
     start();

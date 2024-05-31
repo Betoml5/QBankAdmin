@@ -9,9 +9,7 @@
     @* <img src="~/images/queue-draw.svg" alt="Cola" /> *@
 
 
-    <div class="container__turnos-item">
-        <h2>Atendiendo</h2>
-        <p>1</p>
+    <div id="currentTurno" class="current-turno">
     </div>
 
     <div class="container__turnos">
@@ -29,8 +27,13 @@
 
 
 <script>
+
+    const currentTurno = document.querySelector("#currentTurno");
+    const urlLocal = "https://localhost:5001/turno";
+    const turnos = document.querySelectorAll(".container__turnos-item");
+    const turnosContainer = document.querySelector(".container__turnos");
     const connection = new signalR.HubConnectionBuilder()
-        .withUrl("https://qbank.websitos256.com/turno", {
+        .withUrl(urlLocal, {
             skipNegotiation: true,
             transport: signalR.HttpTransportType.WebSockets,
         })
@@ -51,8 +54,34 @@
         await start();
     });
 
+
     connection.on("AddToQueue", (turno) => {
-        console.log(turno);
+        const $div = document.createElement("div");
+        $div.classList.add("container__turnos-item");
+        const p = document.createElement("p");
+        p.textContent = `Turno: ${turno.codigoTurno}`;
+        $div.appendChild(p);
+
+        turnosContainer.appendChild($div);
+        
+
+
+    });
+
+
+    connection.on("SetCurrentTurn", (turno, caja) => {
+        const p = document.createElement("p");
+        currentTurno.innerHTML = "";
+        p.textContent = `Cliente con turno ${turno} favor de pasar a caja ${caja}`;
+        currentTurno.appendChild(p);
+
+        turnos.forEach((item) => {
+            if (item.textContent.includes(turno)) {
+                item.remove();
+            }
+        });
+
+
     });
 
     // Start the connection.

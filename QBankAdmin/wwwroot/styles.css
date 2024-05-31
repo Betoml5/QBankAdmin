@@ -141,6 +141,21 @@ body {
     padding:16px;
 }
 
+.container__operador-turnos-actual{
+    display:flex;
+    flex-direction:column;
+    margin:1px 0px;
+    font-size:24px;
+    background:#ae2a30;
+    color:#f7f7f7;
+    padding:16px;
+}
+
+.current-turno {
+    background-color: #ae2a30;
+    color: #f7f7f7;
+    padding: 20px;
+}
 
     .btn {
         display: inline-block;
