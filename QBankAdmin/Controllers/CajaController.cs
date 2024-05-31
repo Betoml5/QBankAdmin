@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QBankAdmin.Models.Dtos;
-using QBankAdmin.Models.ViewModels;
+using QBankAdmin.Services;
 
 namespace QBankAdmin.Controllers
 {

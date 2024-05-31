@@ -1,5 +1,75 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model QBankAdmin.Areas.Operador.Models.IndexViewModel
 @{
+
+    Layout = "OperadorLayout";
 }
+
+
+<section class="container__operador">
+
+    <p>Caja 14</p>
+
+    <h3>Turnos en espera</h3>
+  <div class="container__operador-turnos">
+        @foreach (var item in Model.Turnos)
+        {
+            <div class="container__operador-turnos-item">
+                <p>Turno: @item.CodigoTurno</p>
+                <p>@item.Estado</p>
+            </div>
+
+        }
+  </div>
+
+    <div class="container__operador-turnos-actual">
+        <h3>Turno actual</h3>
+        <p>Turno: </p>
+    </div>
+
+    <button id="btnNext">
+        Siguiente turno
+    </button>
+</section>
+
+<script>
+    const urlLocal = "https://localhost:5001/turno";
+    const btnNext = document.getElementById("btnNext");
+    const $turnoActual = document.querySelector(".container__operador-turnos-actual p");
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl(urlLocal, {
+            skipNegotiation: true,
+            transport: signalR.HttpTransportType.WebSockets,
+        })
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+
+    async function start() {
+        try {
+            await connection.start();
+            console.log("SignalR Connected.");
+        } catch (err) {
+            console.log(err);
+            setTimeout(start, 5000);
+        }
+    };
+
+    connection.onclose(async () => {
+        await start();
+    });
+
+    connection.on("AddToQueue", (turno) => {
+        console.log(turno);
+    });
+
+    connection.on("SetCurrentTurn", (turno, cajaId) => {
+        console.log("turno", turno, "CajaId", cajaId)
+        $turnoActual.textContent = turno.codigoTurno;
+    });
+
+    btnNext.addEventListener("click", async () => {
+        await connection.invoke("SetCurrentTurn", (1));
+    });
+
+    // Start the connection.
+    start();
+</script>

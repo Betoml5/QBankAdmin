@@ -2,7 +2,7 @@
 using QBankAdmin.Models.Dtos;
 using System.Text;
 
-namespace QBankAdmin.Models.ViewModels
+namespace QBankAdmin.Services
 {
     public class CajaService
     {
