@@ -5,7 +5,7 @@ namespace QBankAdmin.Services
     public class TurnoService
     {
         static string localAddress = "https://localhost:5001/api/";
-        static string remoteAddress = "https://qbank.websitos256.com/turno";
+        static string remoteAddress = "https://qbank.websitos256.com/api/";
 
         HttpClient client = new HttpClient()
         {

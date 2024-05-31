@@ -36,7 +36,6 @@
     const url = "https://qbank.websitos256.com/turno";
     const btnNext = document.getElementById("btnNext");
     const $turnoActual = document.querySelector(".container__operador-turnos-actual p");
-    const turnos = document.querySelectorAll(".container__operador-turnos-item");
 
     const connection = new signalR.HubConnectionBuilder()
         .withUrl(url, {
@@ -61,13 +60,26 @@
     });
 
     connection.on("AddToQueue", (turno) => {
-        console.log(turno);
+        const turnosContainer = document.querySelector(".container__operador-turnos");
+
+        const $div = document.createElement("div");
+        $div.classList.add("container__operador-turnos-item");
+        const pTurno = document.createElement("p");
+        const pEstado = document.createElement("p");
+        pTurno.textContent = `Turno: ${turno.codigoTurno}`;
+        pEstado.textContent = `${turno.estado}`;
+        $div.appendChild(pTurno);
+        $div.appendChild(pEstado);
+
+        turnosContainer.appendChild($div);
+
     });
 
     connection.on("SetCurrentTurn", (turno, cajaId) => {
-        console.log("turno", turno, "CajaId", cajaId)
-        $turnoActual.textContent = `Turno: ${turno}`;
+        const turnos = document.querySelectorAll(".container__operador-turnos-item");
 
+        $turnoActual.textContent = `Turno: ${turno}`;
+        console.log(turnos)
         turnos.forEach((item) => {
             if (item.textContent.includes(turno)) {
                 item.remove();
@@ -78,7 +90,10 @@
     btnNext.addEventListener("click", async () => {
         // Aqui el lugar de pasar el 1, deberia de ser el id de la caja proporcionadas 
         // por las claims 
+        btnNext.disabled = true;
         await connection.invoke("SetCurrentTurn", (1));
+        btnNext.disabled = false;
+
     });
 
 
