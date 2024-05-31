@@ -29,11 +29,12 @@
 <script>
 
     const currentTurno = document.querySelector("#currentTurno");
+    const url = "https://qbank.websitos256.com/turno";
     const urlLocal = "https://localhost:5001/turno";
     const turnos = document.querySelectorAll(".container__turnos-item");
     const turnosContainer = document.querySelector(".container__turnos");
     const connection = new signalR.HubConnectionBuilder()
-        .withUrl(urlLocal, {
+        .withUrl(url, {
             skipNegotiation: true,
             transport: signalR.HttpTransportType.WebSockets,
         })

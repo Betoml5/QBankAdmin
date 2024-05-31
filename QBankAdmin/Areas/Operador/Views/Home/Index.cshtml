@@ -32,13 +32,14 @@
 </section>
 
 <script>
-    const urlLocal = "https://localhost:5001/turno";
+    const urlLocal = "https://localhost:5001/turno"; 
+    const url = "https://qbank.websitos256.com/turno";
     const btnNext = document.getElementById("btnNext");
     const $turnoActual = document.querySelector(".container__operador-turnos-actual p");
     const turnos = document.querySelectorAll(".container__operador-turnos-item");
 
     const connection = new signalR.HubConnectionBuilder()
-        .withUrl(urlLocal, {
+        .withUrl(url, {
             skipNegotiation: true,
             transport: signalR.HttpTransportType.WebSockets,
         })
@@ -75,6 +76,8 @@
     });
 
     btnNext.addEventListener("click", async () => {
+        // Aqui el lugar de pasar el 1, deberia de ser el id de la caja proporcionadas 
+        // por las claims 
         await connection.invoke("SetCurrentTurn", (1));
     });
 

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using QBankAdmin.Models.Dtos;
+using System.Security.Policy;
 using System.Text;
 
 namespace QBankAdmin.Services
@@ -7,11 +8,13 @@ namespace QBankAdmin.Services
     public class CajaService
     {
         static string localAddress = "https://localhost:5001/api/";
+        static string remoteAddress = "https://qbank.websitos256.com/turno";
+
 
 
         HttpClient client = new HttpClient()
         {
-            BaseAddress = new Uri(localAddress)
+            BaseAddress = new Uri(remoteAddress)
         };
 
         public async Task<IEnumerable<CajaDTO>>? Get()

@@ -5,10 +5,11 @@ namespace QBankAdmin.Services
     public class TurnoService
     {
         static string localAddress = "https://localhost:5001/api/";
+        static string remoteAddress = "https://qbank.websitos256.com/turno";
 
         HttpClient client = new HttpClient()
         {
-            BaseAddress = new Uri(localAddress)
+            BaseAddress = new Uri(remoteAddress)
         };
 
         public async Task<IEnumerable<TurnoDTO>>? Get()
