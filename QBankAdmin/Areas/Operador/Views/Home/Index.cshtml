@@ -7,7 +7,9 @@
 
 <section class="container__operador">
 
-    <p>Caja 14</p>
+    <p>Caja @User.Claims.FirstOrDefault(c => c.Type == "NumeroCaja")?.Value</p>
+    <p>Operador @User.Identity.Name</p>
+                
 
     <h3>Turnos en espera</h3>
   <div class="container__operador-turnos">
@@ -77,7 +79,6 @@
 
     connection.on("SetCurrentTurn", (turno, cajaId) => {
         const turnos = document.querySelectorAll(".container__operador-turnos-item");
-
         $turnoActual.textContent = `Turno: ${turno}`;
         console.log(turnos)
         turnos.forEach((item) => {

@@ -157,6 +157,38 @@ body {
     padding: 20px;
 }
 
+.login-form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 724px;
+    margin: 0 auto;
+    border-radius: var(--border-radius);
+    margin-top: 20px;
+    padding: 20px;
+    background-color: var(--tertiary-color);
+    color: var(--secondary-color);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+    .login-form label {
+        font-size: 1.8rem;
+        margin-bottom: 5px;
+    }
+
+    .login-form input {
+        font-size: 1.8rem;
+        padding: 10px;
+        border-radius: var(--border-radius);
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+        }
+
     .btn {
         display: inline-block;
         grid-column: 1/-1;
