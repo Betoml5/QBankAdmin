@@ -1,0 +1,54 @@
+﻿@model QBankAdmin.Areas.Admin.Models.ViewModels.IndexAdminViewModel;
+@{
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<section class="sctPrincipal">
+        
+                <section id="sctCajas">
+                    <h3>Cajas</h3>
+                    <ol>
+                        @foreach (var item in Model.Cajas)
+                           {
+                                <li>
+                                     <div>
+                                         <label style="font-weight: bold;">Caja <span>@item.NumeroCaja</span></label>
+                                         <label>Usuario: <span>@item.NombreUsuario</span></label>
+                                         <label>Estado: <span>@item.Estado</span></label>
+                                     </div>
+                                     <div>
+                                         <a href="~/Admin/Caja/Editar/@item.Id"><i class="fa-solid fa-pen"></i></a>
+                                         <a href="~/Admin/Caja/Eliminar/@item.Id"><i class="fa-solid fa-trash"></i></a>
+                                     </div>
+                                 </li>
+                           }
+                    </ol>
+                    <a id="aAgregar" href="~/Admin/Caja/Agregar">Agregar caja</a>
+                </section>
+        
+                <section id="sctStats">
+                    <h3>Estadísticas</h3>
+                    <section id="sctStats2">
+                        <div class="dvStat">
+                            <i class="fa-solid fa-hashtag" style="color: #63E6BE;"></i>
+                            <label>Total de turnos</label>
+                            <label>10</label>
+                        </div>
+                        <div class="dvStat">
+                            <i class="fa-solid fa-circle-check" style="color: #B197FC;"></i>
+                            <label>Turnos completados</label>
+                            <label>100</label>
+                        </div>
+                        <div class="dvStat">
+                            <i class="fa-solid fa-ban" style="color: #ff9a57;"></i>
+                            <label>Turnos cancelados</label>
+                            <label>10</label>
+                        </div>
+                        <div class="dvStat">
+                            <i class="fa-solid fa-clock" style="color: #FFD43B;"></i>
+                            <label>Tiempo promedio de espera</label>
+                            <label>10</label>
+                        </div>
+                    </section>
+                </section>
+            </section>
