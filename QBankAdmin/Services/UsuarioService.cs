@@ -34,8 +34,7 @@ namespace QBankAdmin.Services
         {
             try
             {
-                var content = new StringContent(JsonConvert.SerializeObject(usuario), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync("Usuario", content);
+                HttpResponseMessage response = await client.PostAsJsonAsync("Usuario", usuario);
                 if (response.IsSuccessStatusCode)
                 {
                     var data = await response.Content.ReadAsStringAsync();
@@ -69,7 +68,7 @@ namespace QBankAdmin.Services
         {
             try
             {
-                HttpResponseMessage response = await client.PutAsJsonAsync($"usuario/", usuario);
+                HttpResponseMessage response = await client.PutAsJsonAsync("Usuario", usuario);
                 return response.IsSuccessStatusCode;
             }
             catch (Exception e)

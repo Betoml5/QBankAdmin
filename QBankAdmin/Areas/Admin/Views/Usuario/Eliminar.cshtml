@@ -1,14 +1,14 @@
-﻿@model QBankAdmin.Models.Dtos.CajaDTO;
+﻿@model QBankAdmin.Models.Dtos.UsuarioDTO;
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = "~/Views/Shared/LayoutAdmin.cshtml";
 }
 
-<form action="~/Admin/Caja/Eliminar" method="post">
-    <h3>Eliminar caja</h3>
+<form action="~/Admin/Usuario/Eliminar" method="post">
+    <h3>Eliminar usuario</h3>
     <input type="hidden" asp-for="Id" />
     <p>
-        ¿Está seguro de eliminar la caja <span>@Model.NumeroCaja</span>? <br>
+        ¿Está seguro de eliminar al usuario <span>@Model.NombreUsuario</span>? <br>
         La eliminación será permanente.
     </p>
     <div class="dvBotones">

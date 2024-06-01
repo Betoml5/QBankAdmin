@@ -7,10 +7,7 @@
 <form action="~/Admin/Caja/Editar" method="post">
     <h3>Agregar caja</h3>
     <input type="hidden" asp-for="Id" />
-    <input type="text" id="nombreusuario" asp-for="NombreUsuario" placeholder="Nombre de usuario">
     <input type="text" id="numerocaja" asp-for="NumeroCaja" placeholder="Número de caja">
-    <input type="text" id="contrasena" asp-for="Contrasena" placeholder="Contraseña">
-
     <div class="dvBotones">
         <input type="submit" value="Guardar">
         <a href="~/Admin/Home/Index">Cancelar</a>
