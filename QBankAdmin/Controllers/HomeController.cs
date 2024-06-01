@@ -26,5 +26,10 @@ namespace QBankAdmin.Controllers
 
             return View(model);
         }
+
+        public IActionResult Denied()
+        {
+            return View();
+        }
     }
 }

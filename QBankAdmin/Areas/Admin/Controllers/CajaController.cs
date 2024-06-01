@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using QBankAdmin.Areas.Admin.Models.ViewModels;
 using QBankAdmin.Models.Dtos;
 using QBankAdmin.Models.ViewModels;
+using QBankAdmin.Services;
 
 namespace QBankAdmin.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
+
     public class CajaController : Controller
     {
         public IActionResult Index()
