@@ -2,7 +2,7 @@
 {
     public class CajaDTO
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         public string NombreUsuario { get; set; } = null!;
 

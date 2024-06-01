@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Humanizer;
+using Newtonsoft.Json;
 using QBankAdmin.Models.Dtos;
 using System.Security.Policy;
 using System.Text;
@@ -74,8 +75,7 @@ namespace QBankAdmin.Services
         {
             try
             {
-                var content = new StringContent(JsonConvert.SerializeObject(caja), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PutAsync($"caja/{caja.Id}", content);
+                HttpResponseMessage response = await client.PutAsJsonAsync($"caja/",caja);
                 return response.IsSuccessStatusCode;
             }
             catch (Exception e)
