@@ -44,6 +44,7 @@ main{
     padding: 0;
     display: grid;
     grid-template-columns: 1fr 1fr; 
+    grid-template-areas: "cajas stats";
 }
 
 section{
@@ -69,10 +70,33 @@ a{
     box-sizing: border-box;
 } 
 
-#sctCajas{
+#btnVer{ 
+    color: #ae2a30;
+    font-weight: bold;
+    font-size: inherit;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+#sctCajas, #sctUsuarios{
     background-color: #333;
     border-radius: 4px;
     color: #f7f7f7;
+
+    grid-area: cajas;
+}
+
+#sctCajas{
+    visibility: visible;
+}
+
+#sctUsuarios{
+    visibility: hidden;
+}
+
+#sctStats{
+    grid-area: stats;
 }
 
 ol{
@@ -186,6 +210,11 @@ form span{
 form h3{
     color: #f7f7f7; 
     margin:0 0 0 10px;   
+}
+
+form div{
+    width: 100%;
+    display: flex;
 }
 
 input[type="text"],input[type="password"]{
