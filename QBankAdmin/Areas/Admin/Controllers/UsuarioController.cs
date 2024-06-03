@@ -16,18 +16,6 @@ namespace QBankAdmin.Areas.Admin.Controllers
             BaseAddress = new Uri("https://qbank.websitos256.com/api/")
         };
 
-        
-        public IActionResult Index()
-        {
-            var usuarios = usuarioService.Get().Result;
-
-            IndexUsuariosAdminViewModel model = new()
-            {
-                Usuarios = usuarios
-            };
-            return View(model);
-        }
-
         public IActionResult Agregar()
         {
             return View();

@@ -23,11 +23,25 @@
                            }
                     </ol>
                     <a id="aAgregar" href="~/Admin/Caja/Agregar">Agregar caja</a>
-                    <a href="~/Admin/Usuario/Index">Usuarios del sistema</a>
                 </section>
 
-
-        
+    <section id="sctUsuarios">
+        <h3>Usuarios</h3>
+        <ol>
+            @foreach (var item in Model.Usuarios)
+            {
+                <li>
+                    <label>@item.NombreUsuario</label>
+                    <div>
+                        <a href="~/Admin/Usuario/Editar/@item.Id"><i class="fa-solid fa-pen"></i></a>
+                        <a href="~/Admin/Usuario/Eliminar/@item.Id"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                </li>
+            }
+        </ol>
+        <a id="aAgregar" href="~/Admin/Usuario/Agregar">Agregar usuario</a>
+    </section>
+    <button id="btnVer">Ver usuarios</button>
                 <section id="sctStats">
                     <h3>Estadísticas</h3>
                     <section id="sctStats2">
@@ -54,3 +68,22 @@
                     </section>
                 </section>
             </section>
+
+
+<script>
+    document.getElementById('btnVer').addEventListener('click', function () {
+        var cajas = document.getElementById('sctCajas');
+        var usuarios = document.getElementById('sctUsuarios');
+        var button = document.getElementById('btnVer');
+
+        if (cajas.style.display === 'none') {
+            cajas.style.display = 'block';
+            usuarios.style.display = 'none';
+            button.innerText = 'Ver usuarios';
+        } else {
+            cajas.style.display = 'none';
+            usuarios.style.display = 'block';
+            button.innerText = 'Ver cajas';
+        }
+    });
+</script>

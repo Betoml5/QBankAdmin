@@ -14,14 +14,17 @@ namespace QBankAdmin.Areas.Admin.Controllers
         };
 
         CajaService cajaService = new();
+        UsuarioService usuarioService = new();
 
         public IActionResult Index()
         {
             var cajas = cajaService.Get().Result;
+            var usuarios = usuarioService.Get().Result;
 
             IndexAdminViewModel model = new()
             {
-                Cajas = cajas
+                Cajas = cajas,
+                Usuarios = usuarios
             };
             return View(model);
         }
