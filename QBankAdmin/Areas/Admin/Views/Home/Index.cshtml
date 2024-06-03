@@ -31,7 +31,7 @@
             @foreach (var item in Model.Usuarios)
             {
                 <li>
-                    <label>@item.NombreUsuario</label>
+                    <label>@item.Nombre</label>
                     <div>
                         <a href="~/Admin/Usuario/Editar/@item.Id"><i class="fa-solid fa-pen"></i></a>
                         <a href="~/Admin/Usuario/Eliminar/@item.Id"><i class="fa-solid fa-trash"></i></a>
