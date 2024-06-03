@@ -7,7 +7,8 @@
 <form action="~/Admin/Usuario/Editar" method="post">
     <h3>Agregar usuario</h3>
     <input type="hidden" asp-for="Id" />
-    <input type="text" id="nombreusuario" asp-for="NombreUsuario" placeholder="Nombre de usuario">
+    <input type="text" id="nombreusuario" asp-for="Nombre" placeholder="Nombre de usuario">
+    <input type="text" id="correoelectronico" asp-for="CorreoElectronico" placeholder="Correo electrónico">
     <input type="text" id="contrasena" asp-for="Contrasena" placeholder="Contraseña">
     <label>Seleccine el rol del usuario:</label>
     <select asp-for="RolId">

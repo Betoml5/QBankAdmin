@@ -19,8 +19,9 @@ namespace QBankAdmin.Controllers
                 List<Claim> claims = new List<Claim>()
                 {
                     new ("Id", user.Id.ToString()),
-                    new (ClaimTypes.Name, user.NombreUsuario),
+                    new (ClaimTypes.Name, user.Nombre),
                     new (ClaimTypes.Role, user.Rol),
+                    new (ClaimTypes.Email, user.CorreoElectronico)
                 };
 
                 ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
