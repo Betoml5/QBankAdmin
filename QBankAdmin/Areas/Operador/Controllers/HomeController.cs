@@ -11,13 +11,16 @@ namespace QBankAdmin.Areas.Operador.Controllers
     {
 
         TurnoService turnoService = new();
+        CajaService cajaService = new();
         public IActionResult Index()
         {
             var turnos = turnoService.Get().Result;
+            var cajas = cajaService.Get().Result.Where(caja => caja.Estado == "inactiva");
 
             IndexViewModel vm = new()
             {
-                Turnos = turnos
+                Turnos = turnos,
+                Cajas = cajas
             };
 
             return View(vm);

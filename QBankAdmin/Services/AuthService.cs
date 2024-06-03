@@ -16,7 +16,7 @@ namespace QBankAdmin.Services
 
         }
 
-        public async Task<CajaDTO> Login(string nombreUsuario, string contrasena)
+        public async Task<UsuarioDTO> Login(string nombreUsuario, string contrasena)
         {
             try
             {
@@ -25,7 +25,7 @@ namespace QBankAdmin.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var data = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<CajaDTO>(data);
+                    return JsonConvert.DeserializeObject<UsuarioDTO>(data);
                 }
             }
             catch (Exception ex)

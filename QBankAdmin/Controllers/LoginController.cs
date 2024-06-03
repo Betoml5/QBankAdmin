@@ -13,15 +13,14 @@ namespace QBankAdmin.Controllers
         AuthService authService = new AuthService();
         public IActionResult Index(IndexLoginViewModel vm)
         {
-            var caja = authService.Login(vm.Usuario, vm.Contrasena).Result;
-            if (caja != null)
+            var user = authService.Login(vm.Usuario, vm.Contrasena).Result;
+            if (user != null)
             {
                 List<Claim> claims = new List<Claim>()
                 {
-                    new ("Id", caja.Id.ToString()),
-                    new (ClaimTypes.Name, caja.NombreUsuario),
-                    new (ClaimTypes.Role, "Operador"),
-                    new("NumeroCaja", caja.NumeroCaja)
+                    new ("Id", user.Id.ToString()),
+                    new (ClaimTypes.Name, user.NombreUsuario),
+                    new (ClaimTypes.Role, user.Rol),
                 };
 
                 ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -31,10 +30,18 @@ namespace QBankAdmin.Controllers
                     IsPersistent = true,
                 });
 
-                return RedirectToAction("Index", "Home", new {area = "Operador"});
 
-
+                if (user.Rol == "Admin")
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
+                else if (user.Rol == "Operador")
+                {
+                    return RedirectToAction("Index", "Home", new {area="Operador"});
+                }
             }
+
+
             return View(vm);
         }
     }

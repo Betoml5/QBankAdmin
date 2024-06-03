@@ -7,37 +7,95 @@
 
 <section class="container__operador">
 
-    <p>Caja @User.Claims.FirstOrDefault(c => c.Type == "NumeroCaja")?.Value</p>
-    <p>Operador @User.Identity.Name</p>
+    <div>
+        <p class="container__operador-nombre">Operador: @User.Identity.Name</p>
+        <p class="container__operador-caja"></p>
+    </div>
                 
 
-    <h3>Turnos en espera</h3>
-  <div class="container__operador-turnos">
-        @foreach (var item in Model.Turnos)
-        {
-            <div class="container__operador-turnos-item">
-                <p>Turno: @item.CodigoTurno</p>
-                <p>@item.Estado</p>
-            </div>
-
-        }
-  </div>
-
-    <div class="container__operador-turnos-actual">
-        <h3>Turno actual</h3>
-        <p>Turno: </p>
+    <div class="container__operador-cajas">
+        <h3>Cajas</h3>
+        <div class="container__operador-cajas-container">
+            @foreach (var item in Model.Cajas)
+            {
+                <div class="container__operador-cajas-item">
+                    <p data-caja-id="@item.Id" data-caja-numero="@item.NumeroCaja">Caja: @item.NumeroCaja</p>
+                    <p>Estado: @item.Estado</p>
+                    <button>
+                        Atender
+                    </button>
+                </div>
+            }
+        </div>
     </div>
 
-    <button id="btnNext">
-        Siguiente turno
-    </button>
+    <div class="container__operador-turnos-control">
+        <h3>Turnos en espera</h3>
+        <div class="container__operador-turnos">
+            @foreach (var item in Model.Turnos)
+            {
+                <div class="container__operador-turnos-item">
+                    <p>Turno: @item.CodigoTurno</p>
+                    <p>@item.Estado</p>
+                </div>
+
+            }
+        </div>
+
+        <div class="container__operador-turnos-actual">
+            <h3>Turno actual</h3>
+            <p>Turno: </p>
+        </div>
+
+
+        <button id="btnEndTurno">
+            Finalizar turno
+        </button>
+        <button id="btnNext">
+            Siguiente turno
+        </button>
+     
+    </div>
 </section>
 
 <script>
-    const urlLocal = "https://localhost:5001/turno"; 
+    const urlLocal = "https://localhost:5002/turno"; 
     const url = "https://qbank.websitos256.com/turno";
     const btnNext = document.getElementById("btnNext");
     const $turnoActual = document.querySelector(".container__operador-turnos-actual p");
+    const $btnsAtender = document.querySelectorAll(".container__operador-cajas-item button");
+    const $containerTurnosControl = document.querySelector(".container__operador-turnos-control");
+    const $containerCajasControl = document.querySelector(".container__operador-cajas");
+    const $caja = document.querySelector(".container__operador-caja");
+
+    const $btnEndTurno = document.getElementById("btnEndTurno");
+
+    const cajaId = localStorage.getItem("cajaId")
+    const cajaNumero = localStorage.getItem("cajaNumero");
+
+    $btnEndTurno.addEventListener("click", endTurno);
+
+    $btnsAtender.forEach((btn) => {
+        console.log("Atender turno")
+        btn.addEventListener("click", atender);
+    });
+
+    async function atender(e){
+   
+            const dataset = e.target.parentElement.querySelector("p").dataset;
+            console.log(dataset)
+            localStorage.setItem("cajaId", dataset.cajaId);
+            localStorage.setItem("cajaNumero", dataset.cajaNumero);
+
+            $caja.style.display = "block";
+            $caja.textContent = `Caja: ${dataset.cajaNumero}`;
+            $containerCajasControl.style.display = "none";
+            $containerTurnosControl.style.display = "block";
+
+            await connection.invoke("SetActiveCaja", +dataset.cajaId);
+
+       
+    }
 
     const connection = new signalR.HubConnectionBuilder()
         .withUrl(url, {
@@ -63,7 +121,6 @@
 
     connection.on("AddToQueue", (turno) => {
         const turnosContainer = document.querySelector(".container__operador-turnos");
-
         const $div = document.createElement("div");
         $div.classList.add("container__operador-turnos-item");
         const pTurno = document.createElement("p");
@@ -72,9 +129,7 @@
         pEstado.textContent = `${turno.estado}`;
         $div.appendChild(pTurno);
         $div.appendChild(pEstado);
-
         turnosContainer.appendChild($div);
-
     });
 
     connection.on("SetCurrentTurn", (turno, cajaId) => {
@@ -89,16 +144,42 @@
     });
 
     btnNext.addEventListener("click", async () => {
-        // Aqui el lugar de pasar el 1, deberia de ser el id de la caja proporcionadas 
-        // por las claims 
-        btnNext.disabled = true;
-        await connection.invoke("SetCurrentTurn", (1));
-        btnNext.disabled = false;
-
+        const cajaId = localStorage.getItem("cajaId");
+        const cajaNumero = localStorage.getItem("cajaNumero");
+        if (cajaId) {
+            console.log(cajaId)
+            btnNext.disabled = true;
+            await connection.invoke("SetCurrentTurn", (+cajaId));
+            btnNext.disabled = false;
+        }
     });
+
+
+    async function endTurno(){
+            
+            const cajaId = localStorage.getItem("cajaId");
+            const cajaNumero = localStorage.getItem("cajaNumero");  
+            $btnEndTurno.disabled = true;
+            await connection.invoke("SetInactiveCaja", +cajaId)
+            localStorage.removeItem("cajaId");
+            localStorage.removeItem("cajaNumero");
+            window.location.reload();
+            $btnEndTurno.disabled = false;
+    }
+
+    function init() {
+        if (cajaId != null && cajaNumero != null) {
+            $containerTurnosControl.style.display = "block";
+            $containerCajasControl.style.display = "none";
+            $caja.style.display = "block";
+            $caja.textContent = `Caja: ${cajaNumero}`;
+
+        }
+    }
 
 
 
     // Start the connection.
+    init();
     start();
 </script>
