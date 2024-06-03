@@ -61,7 +61,7 @@ body {
 }
 
 .container__usuarios{
-    height:100vh;
+    height:100%;
     background-color:#333;
     padding:20px;
 }
@@ -158,9 +158,16 @@ body {
     width: 130px;
 }
 
-.container__turnos-item p{
-        text-align:center;
-}
+
+    .container__turnos-item:first-child {
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+        transform: scale(1);
+        animation: pulse 2s infinite;
+    }
+
+    .container__turnos-item p {
+        text-align: center;
+    }
 
     .container__turnos-item p {
         text-align: left;
@@ -353,6 +360,7 @@ body {
         margin-top: 20px;
         padding: 10px 20px;
     }
+    
 
 
 @media  (min-width: 768px) {
@@ -362,7 +370,6 @@ body {
         display:flex;
         flex-direction:row;
         padding:20px;
-        height:100%;
     }
 
         .container__usuarios hr{
@@ -400,5 +407,22 @@ body {
 
     .container__operador-cajas{
         padding-left:20px;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
     }
 }
