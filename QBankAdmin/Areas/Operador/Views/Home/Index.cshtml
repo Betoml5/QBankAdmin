@@ -7,55 +7,55 @@
 
 <section class="container__operador">
 
-    <div>
-        <p class="container__operador-nombre">Operador: @User.Identity.Name</p>
-        <p class="container__operador-caja"></p>
-    </div>
-                
+    <div class="container__operador-atendiendo">
+        <div class="container__operador--informacion">
+            <p class="container__operador-caja"></p>
+            <p class="container__operador-nombre">
+                <i class="fa fa-user"></i>
+                @User.Identity.Name
+            </p>
+        </div>
 
-    <div class="container__operador-cajas">
-        <h3>Cajas</h3>
-        <div class="container__operador-cajas-container">
-            @foreach (var item in Model.Cajas)
-            {
-                <div class="container__operador-cajas-item">
-                    <p data-caja-id="@item.Id" data-caja-numero="@item.NumeroCaja">Caja: @item.NumeroCaja</p>
-                    <p>Estado: @item.Estado</p>
-                    <button>
-                        Atender
-                    </button>
-                </div>
-            }
+        <hr />
+
+
+        <div class="container__operador-cajas">
+            <div class="container__operador-cajas-container">
+                @foreach (var item in Model.Cajas)
+                {
+                    <div class="container__operador-cajas-item">
+                        <p data-caja-id="@item.Id" data-caja-numero="@item.NumeroCaja">Caja: @item.NumeroCaja</p>
+                        <button>
+                            Atender
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="container__operador-turnos-control">
+
+
+
+            <div class="container__operador-turnos-actual">
+                <h3>Atendiendo turno:</h3>
+                <p></p>
+            </div>
+
+            <div class="container__operador-turnos-control-btns">
+                <button id="btnEndTurno">
+                    Finalizar turno
+                </button>
+                <button id="btnNext">
+                    Siguiente turno
+                </button>
+            </div>
+
         </div>
     </div>
 
-    <div class="container__operador-turnos-control">
-        <h3>Turnos en espera</h3>
-        <div class="container__operador-turnos">
-            @foreach (var item in Model.Turnos)
-            {
-                <div class="container__operador-turnos-item">
-                    <p>Turno: @item.CodigoTurno</p>
-                    <p>@item.Estado</p>
-                </div>
+   
 
-            }
-        </div>
-
-        <div class="container__operador-turnos-actual">
-            <h3>Turno actual</h3>
-            <p>Turno: </p>
-        </div>
-
-
-        <button id="btnEndTurno">
-            Finalizar turno
-        </button>
-        <button id="btnNext">
-            Siguiente turno
-        </button>
-     
-    </div>
 </section>
 
 <script>

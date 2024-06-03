@@ -15,7 +15,6 @@
 
 html {
     font-size: 62.5%;
-    background-color: #808080;
 }
 
 body {
@@ -59,17 +58,64 @@ body {
     justify-content: center;
     align-items: center;
     margin: 0 auto;
-    /*padding: 20px;*/
-    /*margin-top: 20px;*/
-    /* background-color: var(--tertiary-color); */
 }
+
+.container__usuarios{
+    height:100vh;
+    background-color:#333;
+    padding:20px;
+}
+
+.container__usuarios-caja {
+    place-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    color: #000;
+    background-color: #fff;
+}
+
+    .container__usuarios-caja h3 {
+        font-size: 18px;
+        font-weight: normal;
+    }
+
+    .container__usuarios-caja p {
+        font-size: 34px;
+        font-weight: bold;
+    }
+
+.container__usuarios-turno-actual {
+    place-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    color: #000;
+    background-color: #fff;
+    margin-top: 20px;
+}
+
+    .container__usuarios-turno-actual h3 {
+        font-size: 18px;
+        font-weight: normal;
+    }
+
+    .container__usuarios-turno-actual p {
+        font-size: 50px;
+        font-weight: bolder;
+    }
+
+    .current-turno {
+    }
 
 .container__turnos-actual {
     text-align: center;
     background-color: #333;
     color: #f7f7f7;
-    width:100%;
-    margin-bottom:5px;
+    width: 100%;
+    margin-bottom: 5px;
 }
 
 .container__turnos-actual p{
@@ -89,32 +135,36 @@ body {
 
 
 .container__turnos {
-    padding: 0 10px;
     display: flex;
-    flex-direction:column;
     justify-content: center;
+    padding: 20px;
+   gap: 10px;
+    flex-wrap: wrap;
     width: 100%;
-   /* width: 100%;
-    height: 316px;
-    overflow-x: scroll;
-    overscroll-behavior-x: contain;
-    scroll-snap-type: x proximity;*/
+
 }
 
 .container__turnos-item {
     display: flex;
+    justify-content:center;
+    align-items:center;
     flex-direction: column;
     border-radius: 4px;
-    margin: 1px 0 5px 0;
     font-size: 24px;
-    background: #333;
-    color: #f7f7f7;
-    padding: 16px;
+    background: #fff;
+    color: #000;
+    font-weight: bolder;
+    padding: 10px 40px;
+    width: 130px;
 }
 
 .container__turnos-item p{
-    text-align:left;
+        text-align:center;
 }
+
+    .container__turnos-item p {
+        text-align: left;
+    }
 
 .container__card {
     display: grid;
@@ -142,24 +192,41 @@ body {
 }
 
 .container__operador{
+   
+
+    background-color:#fff;
     padding:20px;
 }
 
-.container__operador-nombre{
-    font-size:24px;
-    background:#333;
-    color:#f7f7f7;
-    padding:16px;
+.container__operador-atendiendo{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.container__operador-nombre {
+    font-size: 24px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.container__operador i {
+    margin-right:6px;
 }
 
 
 .container__operador-caja{
     display:none;
+    text-align:center;
+    font-weight:bold;
+    font-size:24px;
 }
 
 .container__operador-cajas-container {
     display: flex;
     flex-wrap: wrap;
+        gap: 10px;
 }
 
 .container__operador-cajas-item{
@@ -167,15 +234,27 @@ body {
     flex-direction:column;
     margin:1px 0px;
     font-size:24px;
-    background:#333;
-    color:#f7f7f7;
     padding:16px;
-
+    background-color:#333;
+    color:#f7f7f7;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+    border-radius:4px;
 }
 
-.container__operador-turnos-control{
-    display:none;
-}
+    .container__operador-cajas-item button{
+        margin-top:10px;
+        padding:4px;
+        font-size:20px;
+        background-color:var(--primary-color);
+        border:none;
+        color:#f7f7f7;
+        border-radius:2px
+    }
+
+    .container__operador-turnos-control {
+        display: none;
+        padding-top: 12px;
+    }
 
 .container__operador-turnos {
     display: flex;
@@ -197,10 +276,31 @@ body {
     flex-direction:column;
     margin:1px 0px;
     font-size:24px;
-    background:#ae2a30;
-    color:#f7f7f7;
-    padding:16px;
+    text-align:center;
 }
+
+.container__operador-turnos-actual p{
+    font-size:50px;
+    font-weight:bolder;
+}
+
+.container__operador-turnos-control-btns{
+    display:flex;
+    justify-content:center;
+    margin-top:10px;
+
+}
+
+    .container__operador-turnos-control-btns button {
+        padding: 10px;
+        margin: 0 5px;
+        font-size: 24px;
+        background-color: var(--primary-color);
+        border:none;
+        border-right: 3px solid gray;
+        color: #f7f7f7;
+        border-radius: 2px
+    }
 
 .current-turno {
     background-color: #ae2a30;
@@ -253,3 +353,51 @@ body {
         margin-top: 20px;
         padding: 10px 20px;
     }
+
+
+@media  (min-width: 768px) {
+
+
+    .container__usuarios{
+        display:flex;
+        flex-direction:row;
+        padding:20px;
+    }
+
+        .container__usuarios hr{
+            height:300px;
+        }
+
+    .container__usuarios-caja-turno-actual{
+        padding-right:30px;
+        width:30%;
+    }
+
+    .container__turnos {
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+
+    .container__operador-atendiendo {
+        margin-top: 150px;
+        flex-direction: row;
+    }
+
+    .container__operador--informacion {
+        padding-right: 20px;
+        width: 30%;
+    }
+
+        .container__operador-atendiendo hr {
+            height: 300px;
+        }
+
+        .container__operador-turnos-control {
+            width: 70%;
+        }
+
+    .container__operador-cajas{
+        padding-left:20px;
+    }
+}

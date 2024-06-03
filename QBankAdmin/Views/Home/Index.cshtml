@@ -5,18 +5,28 @@
 }
 
 
-<div class="container">
-    @* <img src="~/images/queue-draw.svg" alt="Cola" /> *@
+<div class="container__usuarios">
 
 
-    <div id="currentTurno" class="current-turno">
+    <div class="container__usuarios-caja-turno-actual">
+        <div class="container__usuarios-caja">
+            <h3>Caja</h3>
+            <p></p>
+        </div>
+        <div class="container__usuarios-turno-actual">
+            <h3>Turno Actual</h3>
+            <p id="turnoActual"></p>
+        </div>
     </div>
+
+
+    <hr />
 
     <div class="container__turnos">
         @foreach (var item in Model.Turnos)
         {
             <div class="container__turnos-item">
-                <p>Turno: @item.CodigoTurno</p>
+                <p>@item.CodigoTurno</p>
             </div>
         }
     </div>
@@ -28,7 +38,7 @@
 
 <script>
 
-    const currentTurno = document.querySelector("#currentTurno");
+    const currentTurno = document.querySelector("#turnoActual");
     const url = "https://qbank.websitos256.com/turno";
     const urlLocal = "https://localhost:5002/turno";
     const turnos = document.querySelectorAll(".container__turnos-item");
@@ -62,7 +72,7 @@
         const $div = document.createElement("div");
         $div.classList.add("container__turnos-item");
         const p = document.createElement("p");
-        p.textContent = `Turno: ${turno.codigoTurno}`;
+        p.textContent = `${turno.codigoTurno}`;
         $div.appendChild(p);
 
         turnosContainer.appendChild($div);
@@ -72,13 +82,15 @@
     });
 
 
-    connection.on("SetCurrentTurn", (turno, caja) => {
+    connection.on("SetCurrentTurn", (turno, caja) => { 
+        console.log(turno, caja);
+        const $cajaDeTurnoActual = document.querySelector(".container__usuarios-caja P");
         const turnos = document.querySelectorAll(".container__turnos-item");
-
         const p = document.createElement("p");
         currentTurno.innerHTML = "";
-        p.textContent = `Cliente con turno ${turno} favor de pasar a caja ${caja}`;
+        p.textContent = `${turno}`;
         currentTurno.appendChild(p);
+        $cajaDeTurnoActual.textContent = `${caja}`;
 
         turnos.forEach((item) => {
             if (item.textContent.includes(turno)) {
