@@ -53,15 +53,31 @@ body {
             }
 
 .container {
-    display:flex;
+    background-color:white;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     margin: 0 auto;
     /*padding: 20px;*/
     /*margin-top: 20px;*/
     /* background-color: var(--tertiary-color); */
+}
+
+.container__turnos-actual {
+    text-align: center;
+    background-color: #333;
+    color: #f7f7f7;
+    width:100%;
+    margin-bottom:5px;
+}
+
+.container__turnos-actual p{
+    font-size:50px;
+    color:white;
+    font-weight:bolder;
+    padding:0;
+    margin:0;
 }
 
 .container img {
@@ -73,6 +89,7 @@ body {
 
 
 .container__turnos {
+    padding: 0 10px;
     display: flex;
     flex-direction:column;
     justify-content: center;
@@ -85,16 +102,14 @@ body {
 }
 
 .container__turnos-item {
-    display:flex;
+    display: flex;
     flex-direction: column;
-
-    margin:1px 0px;
-
-    font-size:24px;
-    background:#333;
-    color:#f7f7f7;
-    padding:16px;
-
+    border-radius: 4px;
+    margin: 1px 0 5px 0;
+    font-size: 24px;
+    background: #333;
+    color: #f7f7f7;
+    padding: 16px;
 }
 
 .container__turnos-item p{

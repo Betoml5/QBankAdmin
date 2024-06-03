@@ -1,0 +1,23 @@
+﻿@model QBankAdmin.Models.Dtos.UsuarioDTO
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<form action="~/Admin/Usuario/Editar" method="post">
+    <h3>Agregar usuario</h3>
+    <input type="hidden" asp-for="Id" />
+    <input type="text" id="nombreusuario" asp-for="NombreUsuario" placeholder="Nombre de usuario">
+    <input type="text" id="contrasena" asp-for="Contrasena" placeholder="Contraseña">
+    <label>Seleccine el rol del usuario:</label>
+    <select asp-for="RolId">
+        <option value=1>Administrador</option>
+        <option value=2>Operador</option>
+    </select>
+    <div class="dvBotones">
+        <input type="submit" value="Guardar">
+        <a href="~/Admin/Usuario/Index">Cancelar</a>
+    </div>
+
+</form>
+<p class="errores"> Aquí se mostrarán los errores</p>
