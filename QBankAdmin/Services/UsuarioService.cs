@@ -68,6 +68,11 @@ namespace QBankAdmin.Services
         {
             try
             {
+
+
+
+
+
                 HttpResponseMessage response = await client.PutAsJsonAsync("Usuario", usuario);
                 return response.IsSuccessStatusCode;
             }
