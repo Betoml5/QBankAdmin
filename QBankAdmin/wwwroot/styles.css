@@ -362,6 +362,7 @@ body {
         display:flex;
         flex-direction:row;
         padding:20px;
+        height:100%;
     }
 
         .container__usuarios hr{
