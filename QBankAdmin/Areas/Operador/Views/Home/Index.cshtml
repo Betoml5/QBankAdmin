@@ -46,6 +46,9 @@
                 <button id="btnEndTurno">
                     Finalizar turno
                 </button>
+                <button id="btnSkip">
+                    Saltar turno
+                </button>
                 <button id="btnNext">
                     Siguiente turno
                 </button>
@@ -67,7 +70,7 @@
     const $containerTurnosControl = document.querySelector(".container__operador-turnos-control");
     const $containerCajasControl = document.querySelector(".container__operador-cajas");
     const $caja = document.querySelector(".container__operador-caja");
-
+    const $btnSkipTurno = document.querySelector("#btnSkip");
     const $btnEndTurno = document.getElementById("btnEndTurno");
 
     const cajaId = localStorage.getItem("cajaId")
@@ -76,7 +79,6 @@
     $btnEndTurno.addEventListener("click", endTurno);
 
     $btnsAtender.forEach((btn) => {
-        console.log("Atender turno")
         btn.addEventListener("click", atender);
     });
 
@@ -98,12 +100,14 @@
     }
 
     const connection = new signalR.HubConnectionBuilder()
-        .withUrl(url, {
+        .withUrl(urlLocal, {
             skipNegotiation: true,
             transport: signalR.HttpTransportType.WebSockets,
         })
         .configureLogging(signalR.LogLevel.Information)
         .build();
+
+    
 
     async function start() {
         try {
@@ -133,14 +137,30 @@
     });
 
     connection.on("SetCurrentTurn", (turno, cajaId) => {
-        const turnos = document.querySelectorAll(".container__operador-turnos-item");
-        $turnoActual.textContent = `Turno: ${turno}`;
-        console.log(turnos)
-        turnos.forEach((item) => {
-            if (item.textContent.includes(turno)) {
-                item.remove();
-            }
-        });
+
+        if(turno, cajaId){
+            const turnos = document.querySelectorAll(".container__operador-turnos-item");
+            $turnoActual.textContent = `Turno: ${turno}`;
+            $turnoActual.dataset.turno = turno;
+            turnos.forEach((item) => {
+                if (item.textContent.includes(turno)) {
+                    item.remove();
+                }
+            });
+        }
+
+       
+    });
+
+    connection.on("SkipTurn", (turno, siguienteTurno) => {
+          
+
+        if (turno, siguienteTurno) {
+            $turnoActual.textContent = `Turno: ${siguienteTurno.codigoTurno}`;
+            $turnoActual.dataset.turno = siguienteTurno.codigoTurno;
+        }
+
+
     });
 
     btnNext.addEventListener("click", async () => {
@@ -149,10 +169,30 @@
         if (cajaId) {
             console.log(cajaId)
             btnNext.disabled = true;
+            btnNext.style.cursor = "not-allowed";
+            btnNext.style.opacity = 0.5;
             await connection.invoke("SetCurrentTurn", (+cajaId));
+        }
+
+        setTimeout(() => {
             btnNext.disabled = false;
+            btnNext.style.opacity = 1;
+            btnNext.style.cursor = "inherit"
+
+        }, 1000)
+    });
+
+
+    $btnSkipTurno.addEventListener("click", async () => {
+        console.log($turnoActual.dataset.turno)
+
+        if($turnoActual.dataset.turno){
+            await connection.invoke("SkipTurn", $turnoActual.dataset.turno);
         }
     });
+    
+
+    
 
 
     async function endTurno(){
@@ -173,8 +213,16 @@
             $containerCajasControl.style.display = "none";
             $caja.style.display = "block";
             $caja.textContent = `Caja: ${cajaNumero}`;
-
         }
+
+        const turnoActual = localStorage.getItem("turnoActual");
+
+        if (turnoActual) {
+            $turnoActual.textContent = `Turno: ${turnoActual}`;
+            $turnoActual.dataset.turno = turnoActual;
+        }
+
+
     }
 
 

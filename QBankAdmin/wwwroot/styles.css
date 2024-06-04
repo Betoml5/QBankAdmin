@@ -111,19 +111,49 @@ body {
     }
 
 .container__turnos-actual {
-    text-align: center;
-    background-color: #333;
-    color: #f7f7f7;
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
     width: 100%;
-    margin-bottom: 5px;
+    background-color: #001524;
+    padding: 10px 40px 10px 20px;
 }
 
-.container__turnos-actual p{
-    font-size:50px;
-    color:white;
-    font-weight:bolder;
-    padding:0;
-    margin:0;
+.container__turnos-actual > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+    .container__turnos-actual > div p:first-child{
+        color: #fff;
+        font-size: 2.4rem;
+        font-weight: normal;
+        text-align: left;
+    
+    }
+    .container__turnos-actual > div p:last-child {
+        color: #fff;
+        font-size: 3.4rem;
+        font-weight: bold;
+        text-align: left;
+
+    }
+
+
+.container__turnos-actual p:last-child {
+    color: #fff;
+    font-size: 4.2rem;
+    font-weight: bolder;
+    text-align: right;
+}
+
+#turnoActual{   
+    font-size: 6rem;
+    font-weight: bolder;
+    color: #fff;
+
+
 }
 
 .container img {
@@ -137,41 +167,33 @@ body {
 .container__turnos {
     display: flex;
     justify-content: center;
-    padding: 20px;
-   gap: 10px;
     flex-wrap: wrap;
     width: 100%;
+
+    margin-top: 20px;
 
 }
 
 .container__turnos-item {
-    display: flex;
-    justify-content:center;
+    display:flex;
     align-items:center;
-    flex-direction: column;
-    border-radius: 4px;
-    font-size: 24px;
-    background: #fff;
-    color: #000;
-    font-weight: bolder;
+    justify-content:space-between;
+    background-color: #414040;
+    color: #fff;
     padding: 10px 40px;
-    width: 130px;
+    width: 100%;
+    border-bottom: 1px solid #333;
 }
 
+.container__turnos-item-siguientes-turnos{
+    font-weight:normal;
+    font-size:3.4rem;
+}
 
-    .container__turnos-item:first-child {
-        box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
-        transform: scale(1);
-        animation: pulse 2s infinite;
-    }
-
-    .container__turnos-item p {
-        text-align: center;
-    }
-
-    .container__turnos-item p {
-        text-align: left;
-    }
+.container__turnos-item p:last-child {
+    font-size:4.2rem;
+    font-weight:bold;
+}
 
 .container__card {
     display: grid;
@@ -387,9 +409,10 @@ body {
     }
 
 
-    .container__operador-atendiendo {
-        flex-direction: row;
-    }
+
+        .container__operador-atendiendo {
+            flex-direction: row;
+        }
 
     .container__operador--informacion {
         padding-right: 20px;
