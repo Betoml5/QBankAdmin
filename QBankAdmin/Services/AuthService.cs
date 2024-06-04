@@ -16,11 +16,11 @@ namespace QBankAdmin.Services
 
         }
 
-        public async Task<UsuarioDTO> Login(string nombreUsuario, string contrasena)
+        public async Task<UsuarioDTO> Login(string correoElectronico, string contrasena)
         {
             try
             {
-                var content = new StringContent(JsonConvert.SerializeObject(new { nombreUsuario, contrasena }), Encoding.UTF8, "application/json");
+                var content = new StringContent(JsonConvert.SerializeObject(new { correoElectronico, contrasena }), Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await client.PostAsync("auth", content);
                 if (response.IsSuccessStatusCode)
                 {

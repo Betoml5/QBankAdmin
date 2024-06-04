@@ -4,16 +4,14 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-
-
     Layout = "SimpleLayout";
 }
 
 
 <form action="/login" method="post" class="login-form">
     <div class="form-group">
-        <label for="usuario">Nombre de usuario</label>
-        <input asp-for="Usuario" type="text" class="form-control" id="usuario">
+        <label for="usuario">Correo electronico</label>
+        <input asp-for="CorreoElectronico" type="text" class="form-control" id="usuario">
     </div>
     <div class="form-group">
         <label for="contrasena">Contraseña</label>

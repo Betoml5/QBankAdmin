@@ -13,7 +13,7 @@ namespace QBankAdmin.Controllers
         AuthService authService = new AuthService();
         public IActionResult Index(IndexLoginViewModel vm)
         {
-            var user = authService.Login(vm.Usuario, vm.Contrasena).Result;
+            var user = authService.Login(vm.CorreoElectronico, vm.Contrasena).Result;
             if (user != null)
             {
                 List<Claim> claims = new List<Claim>()
