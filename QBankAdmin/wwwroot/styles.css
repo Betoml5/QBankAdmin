@@ -132,13 +132,13 @@ body {
         text-align: left;
     
     }
-    .container__turnos-actual > div p:last-child {
+    /*.container__turnos-actual > div p:last-child {
         color: #fff;
         font-size: 3.4rem;
         font-weight: bold;
         text-align: left;
 
-    }
+    }*/
 
 
 .container__turnos-actual p:last-child {
