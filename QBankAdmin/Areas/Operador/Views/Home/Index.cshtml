@@ -100,7 +100,7 @@
     }
 
     const connection = new signalR.HubConnectionBuilder()
-        .withUrl(urlLocal, {
+        .withUrl(url, {
             skipNegotiation: true,
             transport: signalR.HttpTransportType.WebSockets,
         })
@@ -174,21 +174,39 @@
             await connection.invoke("SetCurrentTurn", (+cajaId));
         }
 
+        $btnSkipTurno.style.opacity = 0.5;
+        $btnSkipTurno.style.cursor = "not-allowed";
+        $btnSkipTurno.disabled = true;
+
         setTimeout(() => {
             btnNext.disabled = false;
             btnNext.style.opacity = 1;
             btnNext.style.cursor = "inherit"
-
         }, 1000)
+
+        setTimeout(() => { 
+                
+            $btnSkipTurno.style.opacity = 1;
+            $btnSkipTurno.style.cursor = "inherit";
+            $btnSkipTurno.disabled = false;
+            
+        }, 10000)
     });
 
 
     $btnSkipTurno.addEventListener("click", async () => {
-        console.log($turnoActual.dataset.turno)
-
+        $btnSkipTurno.style.opacity = 0.5;          
+        $btnSkipTurno.style.cursor = "not-allowed";
+        $btnSkipTurno.opacity = 0.5;
         if($turnoActual.dataset.turno){
             await connection.invoke("SkipTurn", $turnoActual.dataset.turno);
         }
+
+        setTimeout(() => {
+$btnSkipTurno.style.opacity = 1;
+            $btnSkipTurno.style.cursor = "inherit";
+$btnSkipTurno.opacity = 1;
+        }, 3000)
     });
     
 
