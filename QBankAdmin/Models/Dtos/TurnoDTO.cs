@@ -12,6 +12,8 @@
         public string CodigoTurno { get; set; } = null!;
 
         public DateTime FechaCreacion { get; set; }
+        public DateTime? FechaAtencion { get; set; }
+        public DateTime? FechaFinalizacion { get; set; }
 
 
         public string Estado { get; set; } = null!;

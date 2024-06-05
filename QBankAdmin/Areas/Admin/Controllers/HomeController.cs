@@ -10,18 +10,38 @@ namespace QBankAdmin.Areas.Admin.Controllers
     [Authorize(Roles="Admin")]
     public class HomeController : Controller
     {
+
+
         HttpClient client = new HttpClient()
         {
             BaseAddress = new Uri("https://qbank.websitos256.com/api/")
         };
 
         CajaService cajaService = new();
+        TurnoService turnoService = new();
         UsuarioService usuarioService = new();
 
         public IActionResult Index()
         {
             var cajas = cajaService.Get().Result;
             var usuarios = usuarioService.Get().Result;
+
+            var turnos = turnoService.Get().Result.Where(x => x.FechaCreacion.Date == DateTime.Today);
+
+            var totalturnos = turnoService.Get().Result.Where(x=>x.FechaCreacion.Date == DateTime.Today).Count();
+            var turnoscompletados = turnoService.Get().Result.Where(x => x.Estado == "completado" && x.FechaCreacion.Date == DateTime.Today).Count();
+            var turnoscancelados = turnoService.Get().Result.Where(x => x.Estado == "cancelado" && x.FechaCreacion.Date == DateTime.Today).Count();
+
+            TimeSpan? sumastiempoatencion;
+
+            foreach (var item in turnos)
+            {
+                sumastiempoatencion = item.FechaFinalizacion - item.FechaAtencion;
+            }
+
+
+
+
 
             IndexAdminViewModel model = new()
             {
