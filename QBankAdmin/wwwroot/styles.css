@@ -60,55 +60,6 @@ body {
     margin: 0 auto;
 }
 
-.container__usuarios{
-    height:100%;
-    background-color:#333;
-    padding:20px;
-}
-
-.container__usuarios-caja {
-    place-content: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    color: #000;
-    background-color: #fff;
-}
-
-    .container__usuarios-caja h3 {
-        font-size: 18px;
-        font-weight: normal;
-    }
-
-    .container__usuarios-caja p {
-        font-size: 34px;
-        font-weight: bold;
-    }
-
-.container__usuarios-turno-actual {
-    place-content: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    color: #000;
-    background-color: #fff;
-    margin-top: 20px;
-}
-
-    .container__usuarios-turno-actual h3 {
-        font-size: 18px;
-        font-weight: normal;
-    }
-
-    .container__usuarios-turno-actual p {
-        font-size: 50px;
-        font-weight: bolder;
-    }
-
-    .current-turno {
-    }
 
 .container__turnos-actual {
     display: flex;
@@ -125,35 +76,11 @@ body {
     justify-content: center;
 }
 
-    .container__turnos-actual > div p:first-child{
-        color: #fff;
-        font-size: 2.4rem;
-        font-weight: normal;
-        text-align: left;
-    
-    }
-    /*.container__turnos-actual > div p:last-child {
-        color: #fff;
-        font-size: 3.4rem;
-        font-weight: bold;
-        text-align: left;
-
-    }*/
-
-
-.container__turnos-actual p:last-child {
-    color: #fff;
-    font-size: 4.2rem;
-    font-weight: bolder;
-    text-align: right;
-}
 
 #turnoActual{   
     font-size: 6rem;
     font-weight: bolder;
     color: #fff;
-
-
 }
 
 .container img {
@@ -168,16 +95,26 @@ body {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    width: 100%;
-
+    width: 100%;      
     margin-top: 20px;
 
 }
+.container__turnos-actual:first-child{
+    font-size:3rem;
+    font-weight:normal;
+    color:#fff;
+}
+
+.container__turnos-actual-caja {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #fff;
+}
 
 .container__turnos-item {
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background-color: #414040;
     color: #fff;
     padding: 10px 40px;
