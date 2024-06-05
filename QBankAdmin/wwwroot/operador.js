@@ -14,7 +14,7 @@ const cajaNumero = localStorage.getItem("cajaNumero");
 
 
 const connection = new signalR.HubConnectionBuilder()
-    .withUrl(urlLocal, {
+    .withUrl(url, {
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets,
     })
@@ -31,7 +31,6 @@ $btnsAtender.forEach((btn) => {
 async function atender(e) {
 
     const dataset = e.target.parentElement.querySelector("p").dataset;
-    console.log(dataset)
     localStorage.setItem("cajaId", dataset.cajaId);
     localStorage.setItem("cajaNumero", dataset.cajaNumero);
 
@@ -89,24 +88,22 @@ connection.on("SetCurrentTurn", (turno, cajaId) => {
 });
 
 connection.on("SkipTurn", (turno, siguienteTurno) => {
-
-
     if (turno, siguienteTurno) {
         $turnoActual.textContent = `Turno: ${siguienteTurno.codigoTurno}`;
         $turnoActual.dataset.turno = siguienteTurno.codigoTurno;
     }
-
-
 });
 
 btnNext.addEventListener("click", async () => {
     const cajaId = localStorage.getItem("cajaId");
     const cajaNumero = localStorage.getItem("cajaNumero");
     if (cajaId) {
-        console.log(cajaId)
         btnNext.disabled = true;
         btnNext.style.cursor = "not-allowed";
         btnNext.style.opacity = 0.5;
+        $btnSkipTurno.disabled = true;
+        $btnSkipTurno.style.cursor = "not-allowed";
+        $btnSkipTurno.style.opacity = 0.5;
         await connection.invoke("SetCurrentTurn", (+cajaId));
     }
 
@@ -115,13 +112,15 @@ btnNext.addEventListener("click", async () => {
         btnNext.style.opacity = 1;
         btnNext.style.cursor = "inherit"
 
-    }, 1000)
+        $btnSkipTurno.disabled = false;
+        $btnSkipTurno.style.opacity = 1;
+        $btnSkipTurno.style.cursor = "inherit"
+
+    }, 10000)
 });
 
 
 $btnSkipTurno.addEventListener("click", async () => {
-    console.log($turnoActual.dataset.turno)
-
     if ($turnoActual.dataset.turno) {
         await connection.invoke("SkipTurn", $turnoActual.dataset.turno);
     }
