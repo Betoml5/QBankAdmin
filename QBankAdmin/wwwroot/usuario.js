@@ -5,7 +5,7 @@ const currentTurno = document.querySelector("#turnoActual");
 const $siguentesTurnos = document.querySelectorAll(".container__turnos-item-siguientes-turnos")
 
 const connection = new signalR.HubConnectionBuilder()
-    .withUrl(url, {
+    .withUrl(urlLocal, {
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets,
     })

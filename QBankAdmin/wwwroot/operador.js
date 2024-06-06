@@ -14,7 +14,7 @@ const cajaNumero = localStorage.getItem("cajaNumero");
 
 
 const connection = new signalR.HubConnectionBuilder()
-    .withUrl(url, {
+    .withUrl(urlLocal, {
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets,
     })
@@ -40,6 +40,7 @@ async function atender(e) {
     $containerTurnosControl.style.display = "block";
 
     await connection.invoke("SetActiveCaja", +dataset.cajaId);
+    await getCurrentTurn();
 
 
 }
@@ -47,6 +48,7 @@ async function atender(e) {
 async function start() {
     try {
         await connection.start();
+        await getCurrentTurn();
         console.log("SignalR Connected.");
     } catch (err) {
         console.log(err);
@@ -72,8 +74,8 @@ connection.on("AddToQueue", (turno) => {
 });
 
 connection.on("SetCurrentTurn", (turno, cajaId) => {
-
-    if (turno, cajaId) {
+       console.log(turno, cajaId, "setcurrenturno")
+    if (turno && cajaId) {
         const turnos = document.querySelectorAll(".container__operador-turnos-item");
         $turnoActual.textContent = `Turno: ${turno}`;
         $turnoActual.dataset.turno = turno;
@@ -82,6 +84,8 @@ connection.on("SetCurrentTurn", (turno, cajaId) => {
                 item.remove();
             }
         });
+    } else {
+        $turnoActual.textContent = "No hay turno por atender";
     }
 
 
@@ -93,6 +97,17 @@ connection.on("SkipTurn", (turno, siguienteTurno) => {
         $turnoActual.dataset.turno = siguienteTurno.codigoTurno;
     }
 });
+
+connection.on("GetCurrentTurn", (turno) => {
+    if (turno) {
+        $turnoActual.textContent = `Turno: ${turno.codigoTurno}`;
+        $turnoActual.dataset.turno = turno.codigoTurno;
+    } else {
+        $turnoActual.textContent = "No hay turno por atender";
+    }
+
+})
+
 
 btnNext.addEventListener("click", async () => {
     const cajaId = localStorage.getItem("cajaId");
@@ -127,13 +142,19 @@ $btnSkipTurno.addEventListener("click", async () => {
 });
 
 
-
+async function getCurrentTurn() {
+    try {
+        $turnoActual.textContent = "Esperando turno...";
+        await connection.invoke("GetCurrentTurn", +localStorage.getItem("cajaId"));
+    } catch (e) {
+          $turnoActual.textContent = "No hay turno por atender";
+    }
+}
 
 
 async function endTurno() {
 
     const cajaId = localStorage.getItem("cajaId");
-    const cajaNumero = localStorage.getItem("cajaNumero");
     $btnEndTurno.disabled = true;
     await connection.invoke("SetInactiveCaja", +cajaId)
     localStorage.removeItem("cajaId");
@@ -144,24 +165,17 @@ async function endTurno() {
 
 function init() {
     if (cajaId != null && cajaNumero != null) {
+
         $containerTurnosControl.style.display = "block";
         $containerCajasControl.style.display = "none";
         $caja.style.display = "block";
         $caja.textContent = `Caja: ${cajaNumero}`;
     }
 
-    const turnoActual = localStorage.getItem("turnoActual");
-
-    if (turnoActual) {
-        $turnoActual.textContent = `Turno: ${turnoActual}`;
-        $turnoActual.dataset.turno = turnoActual;
-    }
-
-
 }
 
 
 
 // Start the connection.
-init();
 start();
+init();
