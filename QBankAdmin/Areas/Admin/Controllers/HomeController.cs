@@ -28,9 +28,11 @@ namespace QBankAdmin.Areas.Admin.Controllers
 
             var turnos = turnoService.Get().Result.Where(x => x.FechaCreacion.Date == DateTime.Today);
 
-            var totalturnos = turnoService.GetAll().Result.Where(x=>x.FechaCreacion.Date == DateTime.Today).Count();
-            var turnoscompletados = turnoService.GetAll().Result.Where(x => x.Estado == "completado" && x.FechaCreacion.Date == DateTime.Today).Count();
-            var turnoscancelados = turnoService.GetAll().Result.Where(x => x.Estado == "cancelado" && x.FechaCreacion.Date == DateTime.Today).Count();
+            var estadisticas = turnoService.Estadisticas().Result;
+
+            //var totalturnos = turnoService.GetAll().Result.Where(x=>x.FechaCreacion.Date == DateTime.Today).Count();
+            //var turnoscompletados = turnoService.GetAll().Result.Where(x => x.Estado == "completado" && x.FechaCreacion.Date == DateTime.Today).Count();
+            //var turnoscancelados = turnoService.GetAll().Result.Where(x => x.Estado == "cancelado" && x.FechaCreacion.Date == DateTime.Today).Count();
 
             //TimeSpan? sumastiempoatencion;
 
@@ -47,9 +49,9 @@ namespace QBankAdmin.Areas.Admin.Controllers
             {
                 Cajas = cajas,
                 Usuarios = usuarios,
-                TotalTurnos = totalturnos,
-                TurnosCancelados = turnoscompletados,
-                TurnosCompletados = turnoscancelados
+                //TotalTurnos = totalturnos,
+                //TurnosCancelados = turnoscompletados,
+                //TurnosCompletados = turnoscancelados
             };
             return View(model);
         }
