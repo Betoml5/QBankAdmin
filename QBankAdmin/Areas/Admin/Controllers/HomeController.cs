@@ -28,16 +28,16 @@ namespace QBankAdmin.Areas.Admin.Controllers
 
             var turnos = turnoService.Get().Result.Where(x => x.FechaCreacion.Date == DateTime.Today);
 
-            var totalturnos = turnoService.Get().Result.Where(x=>x.FechaCreacion.Date == DateTime.Today).Count();
-            var turnoscompletados = turnoService.Get().Result.Where(x => x.Estado == "completado" && x.FechaCreacion.Date == DateTime.Today).Count();
-            var turnoscancelados = turnoService.Get().Result.Where(x => x.Estado == "cancelado" && x.FechaCreacion.Date == DateTime.Today).Count();
+            var totalturnos = turnoService.GetAll().Result.Where(x=>x.FechaCreacion.Date == DateTime.Today).Count();
+            var turnoscompletados = turnoService.GetAll().Result.Where(x => x.Estado == "completado" && x.FechaCreacion.Date == DateTime.Today).Count();
+            var turnoscancelados = turnoService.GetAll().Result.Where(x => x.Estado == "cancelado" && x.FechaCreacion.Date == DateTime.Today).Count();
 
-            TimeSpan? sumastiempoatencion;
+            //TimeSpan? sumastiempoatencion;
 
-            foreach (var item in turnos)
-            {
-                sumastiempoatencion = item.FechaFinalizacion - item.FechaAtencion;
-            }
+            //foreach (var item in turnos)
+            //{
+            //    sumastiempoatencion = item.FechaFinalizacion - item.FechaAtencion;
+            //}
 
 
 
@@ -46,7 +46,10 @@ namespace QBankAdmin.Areas.Admin.Controllers
             IndexAdminViewModel model = new()
             {
                 Cajas = cajas,
-                Usuarios = usuarios
+                Usuarios = usuarios,
+                TotalTurnos = totalturnos,
+                TurnosCancelados = turnoscompletados,
+                TurnosCompletados = turnoscancelados
             };
             return View(model);
         }

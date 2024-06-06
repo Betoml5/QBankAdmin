@@ -31,6 +31,25 @@ namespace QBankAdmin.Services
             return new List<TurnoDTO>();
         }
 
-       
+        public async Task<IEnumerable<TurnoDTO>>? GetAll()
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync("turno/all");
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<IEnumerable<TurnoDTO>>(data);
+                }
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e.Message);
+            }
+            return new List<TurnoDTO>();
+        }
+
+
     }
 }
