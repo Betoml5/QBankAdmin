@@ -14,7 +14,7 @@ const cajaNumero = localStorage.getItem("cajaNumero");
 
 
 const connection = new signalR.HubConnectionBuilder()
-    .withUrl(urlLocal, {
+    .withUrl(url, {
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets,
     })
@@ -61,16 +61,7 @@ connection.onclose(async () => {
 });
 
 connection.on("AddToQueue", (turno) => {
-    const turnosContainer = document.querySelector(".container__operador-turnos");
-    const $div = document.createElement("div");
-    $div.classList.add("container__operador-turnos-item");
-    const pTurno = document.createElement("p");
-    const pEstado = document.createElement("p");
-    pTurno.textContent = `Turno: ${turno.codigoTurno}`;
-    pEstado.textContent = `${turno.estado}`;
-    $div.appendChild(pTurno);
-    $div.appendChild(pEstado);
-    turnosContainer.appendChild($div);
+ 
 });
 
 connection.on("SetCurrentTurn", (turno, cajaId) => {
@@ -92,6 +83,12 @@ connection.on("SetCurrentTurn", (turno, cajaId) => {
 });
 
 connection.on("SkipTurn", (turno, siguienteTurno) => {
+
+    if (!siguienteTurno) {
+        $turnoActual.textContent = "No hay turno por atender";
+        return;
+    }
+
     if (turno, siguienteTurno) {
         $turnoActual.textContent = `Turno: ${siguienteTurno.codigoTurno}`;
         $turnoActual.dataset.turno = siguienteTurno.codigoTurno;

@@ -122,9 +122,10 @@ body {
     border-bottom: 1px solid #333;
 }
 
-.container__turnos-item-siguientes-turnos{
-    font-weight:normal;
-    font-size:3.4rem;
+
+.container__turnos-item-siguientes-turnos {
+    font-weight: normal;
+    font-size: 3.4rem;
 }
 
 .container__turnos-item p:last-child {
