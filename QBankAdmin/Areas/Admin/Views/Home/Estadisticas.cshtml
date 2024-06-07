@@ -1,0 +1,88 @@
+﻿@model QBankAdmin.Areas.Admin.Models.ViewModels.EstadisticasViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+
+
+<section class="sctPrincipalEstats">
+    <h3>Estadísticas</h3>
+    <a href="~/Admin/Home/Index"><i class="fa-solid fa-caret-left"></i>Regresar</a>
+    <section id="sctStats">
+        <h4>Hoy</h4>
+        <table class="tblStats">
+            <thead>
+                <tr class="trUno">
+                    <th rowspan="2">Fecha</th>
+                    <th colspan="4">Turnos</th>
+                    <th colspan="2">Tiempo promedio</th>
+                </tr>
+                <tr class="trDos">
+                    <th>Completados</th>
+                    <th>Cancelados</th>
+                    <th>Atendiendo</th>
+                    <th>En espera</th>
+                    <th>De espera</th>
+                    <th>De atención</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>20/12/23</td>
+                    <td>@Model.EstadisticaActual.TurnosAtendidos</td>
+                    <td>@Model.EstadisticaActual.TurnosCancelados</td>
+                    <td>@Model.EstadisticaActual.TurnosEnProgreso</td>
+                    <td>@Model.EstadisticaActual.TurnosPendientes</td>
+                    <td>@Model.EstadisticaActual.TiempoPromedioDeEspera.ToString("0.00")</td>
+                    <td>@Model.EstadisticaActual.TiempoPromedioDeAtencion.ToString("0.00")</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="sctStatsHistorial">
+        <h4>Historial</h4>
+        <table class="tblStats">
+            <thead>
+                <tr class="trUno">
+                    <th rowspan="2">Fecha</th>
+                    <th rowspan="2">Total de turnos</th>
+                    <th colspan="2">Turnos</th>
+                    <th colspan="2">Tiempo promedio</th>
+                </tr>
+                <tr class="trDos">
+                    <th>Completados</th>
+                    <th>Cancelados</th>
+                    <th>De espera</th>
+                    <th>De atención</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>20/12/23</td>
+                    <td>600</td>
+                    <td>30</td>
+                    <td>12</td>
+                    <td>2:00</td>
+                    <td>6:00</td>
+                </tr>
+                <tr>
+                    <td>20/12/23</td>
+                    <td>600</td>
+                    <td>30</td>
+                    <td>12</td>
+                    <td>2:00</td>
+                    <td>6:00</td>
+                </tr>
+                <tr>
+                    <td>20/12/23</td>
+                    <td>600</td>
+                    <td>30</td>
+                    <td>12</td>
+                    <td>2:00</td>
+                    <td>6:00</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</section>
