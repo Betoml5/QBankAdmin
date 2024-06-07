@@ -4,6 +4,8 @@ const turnos = document.querySelectorAll(".container__turnos-item");
 const currentTurno = document.querySelector("#turnoActual");
 const $siguentesTurnos = document.querySelectorAll(".container__turnos-item-siguientes-turnos")
 const currentCaja = document.querySelector(".container__turnos-actual-caja");
+
+
 const connection = new signalR.HubConnectionBuilder()
     .withUrl(url, {
         skipNegotiation: true,
@@ -11,6 +13,10 @@ const connection = new signalR.HubConnectionBuilder()
     })
     .configureLogging(signalR.LogLevel.Information)
     .build();
+
+
+
+
 
 async function start() {
     try {
@@ -30,11 +36,65 @@ connection.onclose(async () => {
 async function AddToGroup() {
     try {
         await connection.invoke("AddToGroup", "usuario");
+        await connection.invoke("GetBankStatus");
         console.log("Unido al grupo")
     } catch (e) {
         console.error("No se pudo unir al grupo")
     }
 }
+
+connection.on("SetBankStatus", (status, turnosCancelados) => {
+    console.log("El estatus del banco es: ", status)
+    console.log("Turnos cancelados: ", turnosCancelados)
+
+    if (status === 0) {
+
+        //Eliminar turnos cancelados si existen
+        const turnos = document.querySelectorAll(".container__turnos-item");
+
+        if (turnosCancelados.length > 0) {
+            turnosCancelados.forEach((turno) => {
+                turnos.forEach((item) => {
+                    if (item.textContent.includes(turno.codigoTurno)) {
+                        item.remove();
+                    }
+                });
+            })
+
+        }
+
+        document.body.style.opacity = "0.5";
+        const dialog = document.createElement("dialog");
+        dialog.textContent = "El banco ha sido cerrado, por favor espere a que se abra nuevamente";
+        dialog.classList.add("dialog");
+        dialog.style.background = "transparent"
+        dialog.style.border = "none"
+        document.body.appendChild(dialog);
+        dialog.showModal();
+    } else {
+        const dialog = document.querySelector("dialog");
+        dialog.textContent = "";
+        dialog.classList.remove("dialog");
+        document.body.style.opacity = "1";
+        dialog.close();
+        document.removeChild(dialog)
+    }
+      
+});
+
+connection.on("GetBankStatus", (status) => {
+    console.log("El estatus del banco es: ", status)
+    if (status === 0) {
+        document.body.style.opacity = "0.5";
+        const dialog = document.createElement("dialog");
+        dialog.textContent = "El banco ha sido cerrado, por favor espere a que se abra nuevamente";
+        dialog.classList.add("dialog");
+        dialog.style.background = "transparent"
+        dialog.style.border = "none"
+        document.body.appendChild(dialog);
+        dialog.showModal();
+    };
+})
 
 
 connection.on("AddToQueue", (turno) => {

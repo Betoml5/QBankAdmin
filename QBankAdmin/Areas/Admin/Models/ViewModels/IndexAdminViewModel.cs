@@ -8,5 +8,6 @@ namespace QBankAdmin.Areas.Admin.Models.ViewModels
         public IEnumerable<UsuarioDTO>? Usuarios { get; set; }
         
         public EstadisticaDTO Estadisticas { get; set;}
+
     }
 }

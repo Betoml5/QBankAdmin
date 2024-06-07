@@ -21,12 +21,22 @@ nav h1{
 }
 
 nav a{
-    margin: 0;
     text-decoration: none;
     color: white;
     padding: 0 20px;
-    margin: 0;
-    width: 10%; 
+}
+
+.nav_admin{
+    margin-right:16px;
+}
+
+.nav_admin button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: var(--primary-color);
+    border: none;
+    color: #f7f7f7;
+    border-radius: 2px
 }
 
 main{

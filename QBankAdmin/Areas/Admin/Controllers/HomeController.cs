@@ -20,6 +20,7 @@ namespace QBankAdmin.Areas.Admin.Controllers
         CajaService cajaService = new();
         TurnoService turnoService = new();
         UsuarioService usuarioService = new();
+        ConfiguracionService configuracionService = new();
 
         public IActionResult Index()
         {
@@ -32,6 +33,7 @@ namespace QBankAdmin.Areas.Admin.Controllers
                 Cajas = cajas,
                 Usuarios = usuarios,
                 Estadisticas = estadisticas
+                
             };
             return View(model);
         }
