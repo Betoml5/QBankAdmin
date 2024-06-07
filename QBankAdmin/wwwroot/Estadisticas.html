@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QBank</title>
+    <link rel="stylesheet" href="Estilos/estilos.css" />
+    <script
+      src="https://kit.fontawesome.com/2d6418d8e2.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    <nav>
+      <h1>QBank</h1>
+      <a href="ConfirmarCerrarSesion.html">Cerrar sesión</a>
+    </nav>
+
+    <main>
+      <section class="sctPrincipalEstats">
+        <h3>Estadísticas</h3>
+        <a href="AdminStats.html"
+          ><i class="fa-solid fa-caret-left"></i>Regresar</a
+        >
+        <section id="sctStats">
+          <h4>Hoy</h4>
+          <table class="tblStats">
+            <thead>
+              <tr class="trUno">
+                <th rowspan="2">Fecha</th>
+                <th colspan="4">Turnos</th>
+                <th colspan="2">Tiempo promedio</th>
+              </tr>
+              <tr class="trDos">
+                <th>Completados</th>
+                <th>Cancelados</th>
+                <th>Atendiendo</th>
+                <th>En espera</th>
+                <th>De espera</th>
+                <th>De atención</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>20/12/23</td>
+                <td>600</td>
+                <td>30</td>
+                <td>12</td>
+                <td>2:00</td>
+                <td>6:00</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="sctStatsHistorial">
+          <h4>Historial</h4>
+          <table class="tblStats">
+            <thead>
+              <tr class="trUno">
+                <th rowspan="2">Fecha</th>
+                <th rowspan="2">Total de turnos</th>
+                <th colspan="2">Turnos</th>
+                <th colspan="2">Tiempo promedio</th>
+              </tr>
+              <tr class="trDos">
+                <th>Completados</th>
+                <th>Cancelados</th>
+                <th>De espera</th>
+                <th>De atención</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>20/12/23</td>
+                <td>600</td>
+                <td>30</td>
+                <td>12</td>
+                <td>2:00</td>
+                <td>6:00</td>
+              </tr>
+              <tr>
+                <td>20/12/23</td>
+                <td>600</td>
+                <td>30</td>
+                <td>12</td>
+                <td>2:00</td>
+                <td>6:00</td>
+              </tr>
+              <tr>
+                <td>20/12/23</td>
+                <td>600</td>
+                <td>30</td>
+                <td>12</td>
+                <td>2:00</td>
+                <td>6:00</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

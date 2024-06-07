@@ -1,5 +1,6 @@
 ﻿using QBankAdmin.Models.Dtos;
 using Newtonsoft.Json;
+using System.Security.Policy;
 namespace QBankAdmin.Services
 {
     public class TurnoService
@@ -48,6 +49,25 @@ namespace QBankAdmin.Services
                 Console.WriteLine(e.Message);
             }
             return new List<TurnoDTO>();
+        }
+
+        public async Task<EstadisticaDTO> Estadisticas()
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync("estadisticas");
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<EstadisticaDTO>(data);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return null;
         }
 
 

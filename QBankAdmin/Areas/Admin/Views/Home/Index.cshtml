@@ -48,30 +48,31 @@
             <div class="dvStat">
                 <i class="fa-solid fa-hashtag" style="color: #63E6BE;"></i>
                 <label>Total de turnos</label>
-                <label>@Model.TotalTurnos</label>
+                <label>@Model.Estadisticas.TurnosEnProgreso</label>
             </div>
             <div class="dvStat">
                 <i class="fa-solid fa-circle-check" style="color: #B197FC;"></i>
                 <label>Turnos completados</label>
-                <label>@Model.TurnosCompletados</label>
+                <label>@Model.Estadisticas.TurnosAtendidos</label>
             </div>
             <div class="dvStat">
                 <i class="fa-solid fa-ban" style="color: #ff9a57;"></i>
                 <label>Turnos cancelados</label>
-                <label>@Model.TurnosCancelados</label>
+                <label>@Model.Estadisticas.TurnosCancelados</label>
             </div>
             <div class="dvStat">
                 <i class="fa-solid fa-clock" style="color: #FFD43B;"></i>
                 <label>Tiempo promedio de espera</label>
-                <label>10</label>
+                <label>@Model.Estadisticas.TiempoPromedioDeEspera.ToString("0.00")</label>
             </div>
             <div class="dvStat">
                 <i class="fa-solid fa-clock" style="color: #BBFF3B;"></i>
                 <label>Tiempo promedio de atención</label>
-                <label>10</label>
+                <label>@Model.Estadisticas.TiempoPromedioDeAtencion.ToString("0.00")</label>
             </div>
         </section>
     </section>
+    <a href="~/Admin/Home/Estadisticas">Ver más</a>
             </section>
 
 

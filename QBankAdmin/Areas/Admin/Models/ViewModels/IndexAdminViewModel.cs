@@ -6,10 +6,7 @@ namespace QBankAdmin.Areas.Admin.Models.ViewModels
     {
         public IEnumerable<CajaDTO>? Cajas { get; set; }
         public IEnumerable<UsuarioDTO>? Usuarios { get; set; }
-
-        public int TotalTurnos { get; set; }
-        public int TurnosCompletados { get; set; }
-        public int TurnosCancelados { get; set; }
-
+        
+        public EstadisticaDTO Estadisticas { get; set;}
     }
 }
