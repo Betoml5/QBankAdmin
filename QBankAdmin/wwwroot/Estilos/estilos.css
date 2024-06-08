@@ -41,16 +41,34 @@ nav a{
 
 main{
     width: 70%;
-    margin: 7% auto 0 auto;
+    margin: 5% auto 0 auto;
 }
 
-.errores{
+.dvBotones{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom: 5px; 
+}
+
+.dvBotones button{
+    background-color: #ae2a30;
+    color: white;
+    border: 0;
+    border-radius: 4px;
+    margin: 0;
+    width: 30%;
+    padding: 5px;
+    font-size:medium;
+    cursor: pointer;
+}
+
+.errores {
     color: red;
     text-align: center;
 }
 
 .sctPrincipal{
-    gap: 10px;
+    /* gap: 10px; */
     padding: 0;
     display: grid;
     grid-template-columns: 1fr 1fr; 
@@ -78,6 +96,8 @@ a{
     padding: 5px;
     border-radius: 4px;
     box-sizing: border-box;
+    font-weight: normal;
+    margin-bottom: 3px;
 } 
 
 #btnVer, .sctPrincipal a:last-child{ 
@@ -116,7 +136,7 @@ a{
 ol{
     list-style: none;
     overflow-y: auto;
-    height: 350px;
+    height: 325px;
     scrollbar-width: none; 
     padding: 0;
 }
