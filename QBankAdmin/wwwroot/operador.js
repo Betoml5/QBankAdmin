@@ -8,6 +8,7 @@ const $containerCajasControl = document.querySelector(".container__operador-caja
 const $caja = document.querySelector(".container__operador-caja");
 const $btnSkipTurno = document.querySelector("#btnSkip");
 const $btnEndTurno = document.getElementById("btnEndTurno");
+const $bankStatusText = document.querySelector("#bankStatus");
 
 const cajaId = localStorage.getItem("cajaId")
 const cajaNumero = localStorage.getItem("cajaNumero");
@@ -48,6 +49,7 @@ async function atender(e) {
 async function start() {
     try {
         await connection.start();
+        await connection.invoke("GetBankStatus");
         await getCurrentTurn();
         console.log("SignalR Connected.");
     } catch (err) {
@@ -60,8 +62,89 @@ connection.onclose(async () => {
     await start();
 });
 
+connection.on("SetBankStatus", (status) => {
+    console.log("El estado del banco es: ", status)
+    if (status === 0) {
+        alert("El banco a cerrado, apurate en atender a los clientes")
+        $bankStatusText.textContent = "Banco cerrado";
+        $bankStatusText.style.color = "red";
+
+        $btnsAtender.forEach((btn) => {
+            btn.disabled = true;
+            btn.style.cursor = "not-allowed";
+            btn.style.opacity = 0.5;
+        });
+
+    } else {
+        $btnSkipTurno.disabled = false;
+        $btnSkipTurno.style.cursor = "inherit";
+        $btnSkipTurno.style.opacity = 1;
+        btnNext.disabled = false;
+        btnNext.style.cursor = "inherit";
+        btnNext.style.opacity = 1;
+        $bankStatusText.textContent = "Banco abierto";
+        $bankStatusText.style.color = "green";
+
+        $btnsAtender.forEach((btn) => {
+            btn.disabled = false;
+            btn.style.cursor = "inherit";
+            btn.style.opacity = 1;
+        });
+
+    }
+})
+
+connection.on("GetBankStatus", (status) => {
+    if (status === 0) {
+        $btnSkipTurno.disabled = true;
+        $btnSkipTurno.style.cursor = "not-allowed";
+        $btnSkipTurno.style.opacity = 0.5;
+        btnNext.disabled = true;
+        btnNext.style.cursor = "not-allowed";
+        btnNext.style.opacity = 0.5;
+        $bankStatusText.textContent = "Banco cerrado";
+        $bankStatusText.style.color = "red";
+
+        $btnsAtender.forEach((btn) => {
+            btn.disabled = true;
+            btn.style.cursor = "not-allowed";
+            btn.style.opacity = 0.5;
+        });
+        
+
+    } else {
+        $btnSkipTurno.disabled = false;
+        $btnSkipTurno.style.cursor = "inherit";
+        $btnSkipTurno.style.opacity = 1;
+        btnNext.disabled = false;
+        btnNext.style.cursor = "inherit";
+        btnNext.style.opacity = 1;
+        $bankStatusText.textContent = "Banco abierto";
+        $bankStatusText.style.color = "green";
+
+
+        $btnsAtender.forEach((btn) => {
+            btn.disabled = false;
+            btn.style.cursor = "inherit";
+            btn.style.opacity = 1;
+        });
+
+    }
+});
+
 connection.on("AddToQueue", (turno) => {
- 
+    if (turno) {
+        const $pAvisos = document.querySelector(".container__operador-turnos-control-avisos");
+        $pAvisos.textContent = "Nuevo turno en espera";
+        $pAvisos.style.textAlign = "center";
+        $pAvisos.style.margin = "20px 0px";
+
+
+        setTimeout(() => {
+            $pAvisos.textContent = "";
+        }, 10000)
+    }
+
 });
 
 connection.on("SetCurrentTurn", (turno, cajaId) => {

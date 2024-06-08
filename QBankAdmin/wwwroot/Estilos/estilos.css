@@ -325,21 +325,27 @@ input[type="text"],input[type="password"]{
     width: 50%;
 }
 
-.dvBotones input[type="submit"], .dvBotones a{
-    background-color: #ae2a30;
-    color: white;
-    border: 0;
-    border-radius: 4px;
-    padding: 5px;
-    width: 40%;
-    text-align: center; 
-    cursor: pointer;
-    display: inline-block;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    font-size: small;
+.dvBotones button[disabled='true']{
+    opacity: 0.5;
 }
+
+
+
+    .dvBotones input[type="submit"], .dvBotones a {
+        background-color: #ae2a30;
+        color: white;
+        border: 0;
+        border-radius: 4px;
+        padding: 5px;
+        width: 40%;
+        text-align: center;
+        cursor: pointer;
+        display: inline-block;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        font-size: small;
+    }
 
 /*                            s i                                              */
 

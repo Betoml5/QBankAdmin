@@ -321,6 +321,13 @@ body {
         padding: 10px 20px;
     }
 
+#bankStatus {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+}
+
 
 .dialog {
     display: flex;
@@ -344,6 +351,12 @@ body {
     border-radius: var(--border-radius);
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
 
+}
+
+.container__operador-turnos-control-avisos {
+    margin: 20px 0px;
+    text-align: center;
+    font-size: 3rem;
 }
 
 
@@ -387,8 +400,10 @@ body {
             width: 70%;
         }
 
-    .container__operador-cajas{
-        padding-left:20px;
+    
+
+    .container__operador-cajas {
+        padding-left: 20px;
     }
 }
 
