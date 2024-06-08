@@ -70,6 +70,24 @@ namespace QBankAdmin.Services
             return null;
         }
 
+       
+
+
+        public async Task<bool> EnviarEstadisticas()
+        {
+            try
+            {
+                var contenido = new StringContent(string.Empty);
+                HttpResponseMessage response = await client.PostAsync("estadisticas",contenido);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return false;
+        }
+
 
     }
 }

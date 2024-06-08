@@ -42,11 +42,26 @@ namespace QBankAdmin.Areas.Admin.Controllers
         {
             var estadisticas = turnoService.Estadisticas().Result;
 
+
             EstadisticasViewModel vm = new()
             {
                 EstadisticaActual = estadisticas
             };
             return View(vm);
+        }
+
+        public async Task<IActionResult> EnviarEstadistica()
+        {
+            bool estadisticasenviadas = await turnoService.EnviarEstadisticas();
+
+            if (estadisticasenviadas)
+            {
+                return RedirectToAction("Estadisticas", "Home", new { area = "Admin" });
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }
