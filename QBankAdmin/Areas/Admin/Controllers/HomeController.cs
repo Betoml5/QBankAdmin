@@ -52,17 +52,21 @@ namespace QBankAdmin.Areas.Admin.Controllers
             return View(vm);
         }
 
+
+
+        [HttpPost]
         public async Task<IActionResult> EnviarEstadistica()
         {
             bool estadisticasenviadas = await estadisticaService.EnviarEstadisticas();
 
             if (estadisticasenviadas)
             {
-                return RedirectToAction("Estadisticas", "Home", new { area = "Admin" });
+                return Ok(new { success = true, message = "Estadísticas enviadas correctamente" });
+
             }
             else
             {
-                return RedirectToAction("Index");
+                return StatusCode(500, new { success = false, message = "Las estadisticas ya se encuentran registradas." });
             }
         }
     }

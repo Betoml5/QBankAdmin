@@ -34,8 +34,10 @@
                            }
                     </ol>
                     <a id="aAgregar" href="~/Admin/Caja/Agregar">Agregar caja</a>
-                     <a id="aAgregar" href="~/Admin/Home/EnviarEstadistica">Enviar estadisticas</a>
+      
                 </section>
+
+       
 
     <section id="sctUsuarios">
         <h3>Usuarios</h3>
@@ -88,7 +90,45 @@
             </section>
 
 
+
+<button id="enviarEstadisticas">Enviar Estadísticas</button>
+
+<input type="checkbox" id="btn-modal">
+<div class="container-modal">
+    <div class="content-modal">
+        <h2>Resultado</h2>
+        <p id="resultado"></p>
+        <div class="btn-cerrar">
+            <label for="btn-modal">Cerrar</label>
+        </div>
+    </div>
+    <label for="btn-modal" class="cerrar-modal"></label>
+</div>
+
+
 <script>
+
+    document.getElementById('enviarEstadisticas').addEventListener('click', function () {
+        fetch('/Admin/Home/EnviarEstadistica', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('resultado').textContent = data.message;
+                document.getElementById('btn-modal').checked = true; 
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('resultado').textContent = 'Ocurrió un error al enviar las estadísticas.';
+                document.getElementById('btn-modal').checked = true; 
+            });
+    });
+
+
     document.getElementById('btnVer').addEventListener('click', function () {
         var cajas = document.getElementById('sctCajas');
         var usuarios = document.getElementById('sctUsuarios');
