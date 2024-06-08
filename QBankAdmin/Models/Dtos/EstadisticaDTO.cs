@@ -2,6 +2,7 @@
 {
 	public class EstadisticaDTO
 	{
+		public DateTime Fecha { get; set; }
 		public int TurnosCancelados { get; set; }
 		public int TurnosAtendidos { get; set; }
 		public int TurnosPendientes { get; set; }

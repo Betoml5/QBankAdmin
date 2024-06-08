@@ -18,7 +18,7 @@ namespace QBankAdmin.Areas.Admin.Controllers
         };
 
         CajaService cajaService = new();
-        TurnoService turnoService = new();
+        EstadisticaService estadisticaService = new();
         UsuarioService usuarioService = new();
         ConfiguracionService configuracionService = new();
 
@@ -26,7 +26,7 @@ namespace QBankAdmin.Areas.Admin.Controllers
         {
             var cajas = cajaService.Get().Result;
             var usuarios = usuarioService.Get().Result;
-            var estadisticas = turnoService.Estadisticas().Result;
+            var estadisticas = estadisticaService.EstadisticasHoy().Result;
 
             IndexAdminViewModel model = new()
             {
@@ -40,19 +40,21 @@ namespace QBankAdmin.Areas.Admin.Controllers
 
         public IActionResult Estadisticas()
         {
-            var estadisticas = turnoService.Estadisticas().Result;
-
+            var estadisticas = estadisticaService.EstadisticasHoy().Result;
+            var allestadisticas = estadisticaService.GetAllEstadisticas().Result;
 
             EstadisticasViewModel vm = new()
             {
-                EstadisticaActual = estadisticas
+                EstadisticaActual = estadisticas,
+                HistorialEstadisticas = allestadisticas
+                
             };
             return View(vm);
         }
 
         public async Task<IActionResult> EnviarEstadistica()
         {
-            bool estadisticasenviadas = await turnoService.EnviarEstadisticas();
+            bool estadisticasenviadas = await estadisticaService.EnviarEstadisticas();
 
             if (estadisticasenviadas)
             {
@@ -60,7 +62,7 @@ namespace QBankAdmin.Areas.Admin.Controllers
             }
             else
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
         }
     }
