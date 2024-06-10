@@ -13,6 +13,9 @@ const $bankStatusText = document.querySelector("#bankStatus");
 const cajaId = localStorage.getItem("cajaId")
 const cajaNumero = localStorage.getItem("cajaNumero");
 
+var nextTimeOut;
+var skipTimeOut;
+
 
 const connection = new signalR.HubConnectionBuilder()
     .withUrl(url, {
@@ -202,7 +205,7 @@ btnNext.addEventListener("click", async () => {
         await connection.invoke("SetCurrentTurn", (+cajaId));
     }
 
-    setTimeout(() => {
+  nextTimeOut = setTimeout(() => {
         btnNext.disabled = false;
         btnNext.style.opacity = 1;
         btnNext.style.cursor = "inherit"
