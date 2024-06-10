@@ -10,21 +10,22 @@ namespace QBankAdmin.Controllers
 {
     public class LoginController : Controller
     {
-        public string Error { get; set; }
 
         AuthService authService = new AuthService();
         public IActionResult Index(IndexLoginViewModel vm)
         {
-            if(vm.CorreoElectronico != null)
-            {
-                Error = string.Join("\n", "Ingrese un correo electronico");
-            }
-            else if(vm.Contrasena != null)
-            {
-                Error = string.Join("\n", "Ingrese una contraseña");
+            vm.Errores = new List<string>();
+            if (vm.CorreoElectronico == null)
+            {   
+                vm.Errores.Add("Ingrese un correo electrónico.");
             }
 
-            if(Error == null)
+            if(vm.Contrasena == null)
+            {
+                vm.Errores.Add("Ingrese una contraseña.");
+            }
+
+            if(vm.Errores == null)
             {
                 var user = authService.Login(vm.CorreoElectronico, vm.Contrasena).Result;
                 if (user != null)
@@ -55,10 +56,10 @@ namespace QBankAdmin.Controllers
                     }
                 }
 
-                Error = "";
+                vm.Errores.Clear();
                 return View(vm);
             }
-            return View();
+            return View(vm);
         }
     }
 }

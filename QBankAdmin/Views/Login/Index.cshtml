@@ -17,6 +17,13 @@
         <label for="contrasena">Contraseña</label>
         <input asp-for="Contrasena" type="password" class="form-control" id="contrasena">
     </div>
+    @if(Model.Errores != null)
+    {
+        foreach (var item in Model.Errores)
+        {
+            <p>@item</p>
+        }
+    }
     <button type="submit" class="btn btn-primary">Iniciar sesión</button>
 </form>
 
