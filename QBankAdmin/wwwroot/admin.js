@@ -5,7 +5,7 @@ const $btnCerrarBanco = document.querySelector("#btnCerrarBanco");
 const $btnAbrirBanco = document.querySelector("#btnAbrirBanco");
 const $bankStatusText = document.querySelector(".bankStatusText")
 const connection = new signalR.HubConnectionBuilder()
-    .withUrl(urlLocal, {
+    .withUrl(url, {
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets,
     })

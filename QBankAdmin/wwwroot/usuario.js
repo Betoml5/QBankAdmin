@@ -4,10 +4,10 @@ const turnos = document.querySelectorAll(".container__turnos-item");
 const currentTurno = document.querySelector("#turnoActual");
 const $siguentesTurnos = document.querySelectorAll(".container__turnos-item-siguientes-turnos")
 const currentCaja = document.querySelector(".container__turnos-actual-caja");
-
+const $myAudio = document.querySelector("#myAudio");
 
 const connection = new signalR.HubConnectionBuilder()
-    .withUrl(urlLocal, {
+    .withUrl(url, {
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets,
     })
@@ -17,7 +17,13 @@ const connection = new signalR.HubConnectionBuilder()
 
 
 
+function playAudio() {
+    $myAudio.play();
+}
 
+function pauseAudio() {
+    $myAudio.pause();
+}
 async function start() {
     try {
         await connection.start();
@@ -117,19 +123,24 @@ connection.on("AddToQueue", (turno) => {
 });
 
 
+let queue = [];
 connection.on("SetCurrentTurn", (turno, caja) => {
     console.log("turno", turno, caja)
     console.log("solo los usuarios deberian ver esto", turno, caja)
+
+
     if (!turno && !caja) {
         currentCaja.textContent = "Esperando...";
         currentTurno.textContent = "Esperando...";
     }
 
     if (turno && caja) {
-
+        queue.push(turno);
         // check if its already a turn
         if (currentCaja && currentCaja) {
             setTimeout(() => {
+                playAudio();
+
                 const $cajaDeTurnoActual = document.querySelector(".container__turnos-actual-caja");
                 const turnos = document.querySelectorAll(".container__turnos-item");
                 const p = document.createElement("p");
@@ -144,8 +155,11 @@ connection.on("SetCurrentTurn", (turno, caja) => {
                     }
                 });
 
+                queue.pop();
+
                 setSiguientesTurnosText();
-            }, 2500)
+            }, queue.length * 4000)
+
         } else {
             const $cajaDeTurnoActual = document.querySelector(".container__turnos-actual-caja");
             const turnos = document.querySelectorAll(".container__turnos-item");
