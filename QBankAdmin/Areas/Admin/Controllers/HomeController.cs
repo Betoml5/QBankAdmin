@@ -52,6 +52,11 @@ namespace QBankAdmin.Areas.Admin.Controllers
             return View(vm);
         }
 
+        public IActionResult CerrarSesion()
+        {
+            return RedirectToAction("Index", "Login", new { area = "" });
+        }
+
 
 
         [HttpPost]
@@ -61,7 +66,7 @@ namespace QBankAdmin.Areas.Admin.Controllers
 
             if (estadisticasenviadas)
             {
-                return Ok(new { success = true, message = "Estadísticas enviadas correctamente" });
+                return Ok(new { success = true, message = "Estadísticas enviadas correctamente." });
 
             }
             else

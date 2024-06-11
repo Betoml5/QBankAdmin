@@ -66,7 +66,7 @@ namespace QBankAdmin.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Editar(UsuariosViewModel vm)
         {
-            UsuarioValidator validador = new();
+            UsuarioEditarValidator validador = new();
             var resultado = await validador.ValidateAsync(vm.Usuario);
             if (resultado.IsValid)
             {
