@@ -1,24 +1,31 @@
-﻿@model QBankAdmin.Models.Dtos.UsuarioDTO
+﻿@model QBankAdmin.Areas.Admin.Models.ViewModels.UsuariosViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = "~/Views/Shared/LayoutAdmin.cshtml";
 }
 
 <form action="~/Admin/Usuario/Editar" method="post">
-    <h3>Agregar usuario</h3>
-    <input type="hidden" asp-for="Id" />
-    <input type="text" id="nombreusuario" asp-for="Nombre" placeholder="Nombre de usuario">
-    <input type="text" id="correoelectronico" asp-for="CorreoElectronico" placeholder="Correo electrónico">
-    <input type="text" id="contrasena" asp-for="Contrasena" placeholder="Contraseña">
+    <h3>Editar usuario</h3>
+    <input type="hidden" asp-for="Usuario.Id" />
+    <input type="text" id="nombreusuario" asp-for="Usuario.Nombre" placeholder="Nombre de usuario">
+    <input type="text" id="correoelectronico" asp-for="Usuario.CorreoElectronico" placeholder="Correo electrónico">
     <label>Seleccine el rol del usuario:</label>
-    <select asp-for="RolId">
+    <select asp-for="Usuario.RolId">
         <option value=1>Administrador</option>
         <option value=2>Operador</option>
     </select>
+
+    @if (Model.Errores != null)
+    {
+        foreach (var item in Model.Errores)
+        {
+            <p class="errores">@item</p>
+        }
+    }
+
     <div class="dvBotones">
         <input type="submit" value="Guardar">
-        <a href="~/Admin/Usuario/Index">Cancelar</a>
+        <a href="~/Admin/Home/Index">Cancelar</a>
     </div>
 
 </form>
-<p class="errores"> Aquí se mostrarán los errores</p>

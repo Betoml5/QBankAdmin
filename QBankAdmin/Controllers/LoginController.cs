@@ -43,12 +43,12 @@ namespace QBankAdmin.Controllers
                 if (user != null)
                 {
                     List<Claim> claims = new List<Claim>()
-                {
+                 {
                     new ("Id", user.Id.ToString()),
                     new (ClaimTypes.Name, user.Nombre),
                     new (ClaimTypes.Role, user.Rol),
                     new (ClaimTypes.Email, user.CorreoElectronico)
-                };
+                 };
 
                     ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -68,9 +68,7 @@ namespace QBankAdmin.Controllers
                     }
                 }
 
-                vm.Errores.Clear();
-
-
+                vm.Errores.Add("Las credenciales fueron incorrectas.");
 
             }
                 return View(vm);
