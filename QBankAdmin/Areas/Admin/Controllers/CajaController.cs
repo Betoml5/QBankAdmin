@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using QBankAdmin.Areas.Admin.Models.ViewModels;
 using QBankAdmin.Models.Dtos;
+using QBankAdmin.Models.Validators;
 using QBankAdmin.Models.ViewModels;
 using QBankAdmin.Services;
 
@@ -21,25 +22,30 @@ namespace QBankAdmin.Areas.Admin.Controllers
 
         public IActionResult Agregar()
         {
-            return View();
+            CajasViewModel vm = new();
+            return View(vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Agregar(CajaDTO caja)
+        public async Task<IActionResult> Agregar(CajasViewModel vm)
         {
-            if(caja != null)
+            CajaValidator validador = new();
+            var resultado = await validador.ValidateAsync(vm.Caja);
+            if (resultado.IsValid)
             {
-                var cajacreada = await cajaService.Create(caja);
-                if (cajacreada != null)
-                {
-                    return RedirectToAction("Index", "Home", new { area = "Admin" });
-                }
+                var cajacreada = await cajaService.Create(vm.Caja);
+                return RedirectToAction("Index", "Home", new { area = "Admin" });
             }
-            return View(caja);
+            else
+            {
+                vm.Errores = resultado.Errors.Select(x => x.ErrorMessage).ToList();
+            }
+            return View(vm);
         }
 
         public async Task<IActionResult> Editar(int id)
         {
+            CajasViewModel vm = new();
             var caja = await cajaService.GetById(id);
             if (caja == null)
             {
@@ -47,20 +53,29 @@ namespace QBankAdmin.Areas.Admin.Controllers
             }
             else
             {
-                return View(caja);
+                vm.Caja = caja;
+                return View(vm);
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> Editar(CajaDTO caja)
+        public async Task<IActionResult> Editar(CajasViewModel vm)
         {
-            bool actualizacion = await cajaService.Update(caja);
-            if (actualizacion)
+            CajaValidator validador = new();
+            var resultado = await validador.ValidateAsync(vm.Caja);
+            if (resultado.IsValid)
             {
-                return RedirectToAction("Index", "Home", new { area = "Admin" });
+                bool actualizacion = await cajaService.Update(vm.Caja);
+                if (actualizacion)
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
             }
-
-            return View(caja);
+            else
+            {
+                vm.Errores = resultado.Errors.Select(x => x.ErrorMessage).ToList();
+            }
+            return View(vm);
         }
 
         public async Task<IActionResult> Eliminar(int id)

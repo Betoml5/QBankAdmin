@@ -1,4 +1,4 @@
-﻿@model QBankAdmin.Models.Dtos.CajaDTO;
+﻿@model QBankAdmin.Areas.Admin.Models.ViewModels.CajasViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = "~/Views/Shared/LayoutAdmin.cshtml";
@@ -6,12 +6,21 @@
 
 <form action="~/Admin/Caja/Agregar" method="post">
     <h3>Agregar caja</h3>
-    <input type="text" id="numerocaja" asp-for="NumeroCaja" placeholder="Número de caja">
+    <input type="text" id="numerocaja" asp-for="Caja.NumeroCaja" placeholder="Número de caja">
+
+    @if (Model.Errores != null)
+    {
+        foreach (var item in Model.Errores)
+        {
+            <p class="errores">@item</p>
+        }
+    }
+
     <div class="dvBotones">
         <input type="submit" value="Agregar">
         <a href="~/Admin/Home/Index">Cancelar</a>
     </div>
-
+   
 </form>
-<p class="errores"> Aquí se mostrarán los errores</p>
+
 

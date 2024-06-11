@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp;
 using QBankAdmin.Areas.Admin.Models.ViewModels;
 using QBankAdmin.Models.Dtos;
+using QBankAdmin.Models.Validators;
 using QBankAdmin.Models.ViewModels;
 using QBankAdmin.Services;
 
@@ -10,6 +12,7 @@ namespace QBankAdmin.Areas.Admin.Controllers
     public class UsuarioController : Controller
     {
         UsuarioService usuarioService = new();
+        
 
         HttpClient client = new HttpClient()
         {
@@ -18,27 +21,36 @@ namespace QBankAdmin.Areas.Admin.Controllers
 
         public IActionResult Agregar()
         {
-            return View();
+            UsuariosViewModel vm = new();
+            return View(vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Agregar(UsuarioDTO usuario)
+        public async Task<IActionResult> Agregar(UsuariosViewModel vm)
         {
-            if (usuario != null)
-            {
-                var usuariocreado = await usuarioService.Create(usuario);
-                if (usuariocreado != null)
+            UsuarioValidator validador = new();
+            var resultado = await validador.ValidateAsync(vm.Usuario);
+                if (resultado.IsValid)
                 {
-                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                    var usuariocreado = await usuarioService.Create(vm.Usuario);
+                    if (usuariocreado != null)
+                    {
+                        return RedirectToAction("Index", "Home", new { area = "Admin" });
+                    }
                 }
-            }
-            return View(usuario);
+                else
+                {
+                   vm.Errores = resultado.Errors.Select(x => x.ErrorMessage).ToList();
+                   return View(vm);
+                }
+            return View();
         }
 
 
 
         public async Task<IActionResult> Editar(int id)
         {
+            UsuariosViewModel vm = new();
             var usuario = await usuarioService.GetById(id);
             if (usuario == null)
             {
@@ -46,20 +58,30 @@ namespace QBankAdmin.Areas.Admin.Controllers
             }
             else
             {
-                return View(usuario);
+                vm.Usuario = usuario;
+                return View(vm);
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> Editar(UsuarioDTO usuario)
+        public async Task<IActionResult> Editar(UsuariosViewModel vm)
         {
-            bool actualizacion = await usuarioService.Update(usuario);
-            if (actualizacion)
+            UsuarioValidator validador = new();
+            var resultado = await validador.ValidateAsync(vm.Usuario);
+            if (resultado.IsValid)
             {
-                return RedirectToAction("Index", "Home", new { area = "Admin" });
+                bool actualizacion = await usuarioService.Update(vm.Usuario);
+                if (actualizacion)
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
             }
-
-            return View(usuario);
+            else
+            {
+                vm.Errores = resultado.Errors.Select(x => x.ErrorMessage).ToList();
+                return View(vm);
+            }
+            return View();
         }
 
         public async Task<IActionResult> Eliminar(int id)
