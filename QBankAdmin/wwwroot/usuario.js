@@ -7,7 +7,7 @@ const currentCaja = document.querySelector(".container__turnos-actual-caja");
 
 
 const connection = new signalR.HubConnectionBuilder()
-    .withUrl(url, {
+    .withUrl(urlLocal, {
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets,
     })
@@ -44,8 +44,8 @@ async function AddToGroup() {
 }
 
 connection.on("SetBankStatus", (status, turnosCancelados) => {
-    console.log("El estatus del banco es: ", status)
-    console.log("Turnos cancelados: ", turnosCancelados)
+    console.log("El nuevo estatus del banco es: ", status)
+    console.log("Turnos nuevo cancelados: ", turnosCancelados)
 
     if (status === 0) {
 
@@ -79,7 +79,6 @@ connection.on("SetBankStatus", (status, turnosCancelados) => {
         dialog.close();
         document.removeChild(dialog)
     }
-      
 });
 
 connection.on("GetBankStatus", (status) => {
@@ -127,23 +126,76 @@ connection.on("SetCurrentTurn", (turno, caja) => {
     }
 
     if (turno && caja) {
+
+        // check if its already a turn
+        if (currentCaja && currentCaja) {
+            setTimeout(() => {
+                const $cajaDeTurnoActual = document.querySelector(".container__turnos-actual-caja");
+                const turnos = document.querySelectorAll(".container__turnos-item");
+                const p = document.createElement("p");
+                currentTurno.innerHTML = "";
+                p.textContent = `${turno}`;
+                currentTurno.appendChild(p);
+                $cajaDeTurnoActual.textContent = `CAJA ${caja}`;
+
+                turnos.forEach((item) => {
+                    if (item.textContent.includes(turno)) {
+                        item.remove();
+                    }
+                });
+
+                setSiguientesTurnosText();
+            }, 2500)
+        } else {
+            const $cajaDeTurnoActual = document.querySelector(".container__turnos-actual-caja");
+            const turnos = document.querySelectorAll(".container__turnos-item");
+            const p = document.createElement("p");
+            currentTurno.innerHTML = "";
+            p.textContent = `${turno}`;
+            currentTurno.appendChild(p);
+            $cajaDeTurnoActual.textContent = `CAJA ${caja}`;
+
+            turnos.forEach((item) => {
+                if (item.textContent.includes(turno)) {
+                    item.remove();
+                }
+            });
+
+            setSiguientesTurnosText();
+        }
+
+       
+    }
+});
+
+connection.on("RemoveFromQueue", (turno, siguienteTurno) => {
+    console.log("turno", turno, "siguiente turno", siguienteTurno)
+    if (!siguienteTurno) {
+        currentCaja.textContent = "Esperando...";
+        currentTurno.textContent = "Esperando...";
+        return;
+    }
+
+    if (turno && siguienteTurno) {
         const $cajaDeTurnoActual = document.querySelector(".container__turnos-actual-caja");
         const turnos = document.querySelectorAll(".container__turnos-item");
         const p = document.createElement("p");
         currentTurno.innerHTML = "";
-        p.textContent = `${turno}`;
+        p.textContent = `${siguienteTurno.codigoTurno}`;
         currentTurno.appendChild(p);
-        $cajaDeTurnoActual.textContent = `CAJA ${caja}`;
+        $cajaDeTurnoActual.textContent = `CAJA ${siguienteTurno.caja}`;
 
         turnos.forEach((item) => {
-            if (item.textContent.includes(turno)) {
+            if (item.textContent.includes(siguienteTurno.codigoTurno)) {
                 item.remove();
             }
         });
 
         setSiguientesTurnosText();
     }
-});
+
+        
+})
 
 
 connection.on("SkipTurn", (turno, siguienteTurno) => {
@@ -196,12 +248,15 @@ connection.on("SkipTurn", (turno, siguienteTurno) => {
 })
 
 function setSiguientesTurnosText() {
-    $siguentesTurnos.forEach((item, index) => {
+    document.querySelectorAll(".container__turnos-item-siguientes-turnos")
+        .forEach((item, index) => {
         if (index == 0) {
             item.textContent = "Proximos turnos";
             return;
         }
     });
+
+   
 }
 
 

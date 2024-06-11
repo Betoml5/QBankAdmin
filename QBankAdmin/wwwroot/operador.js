@@ -9,6 +9,7 @@ const $caja = document.querySelector(".container__operador-caja");
 const $btnSkipTurno = document.querySelector("#btnSkip");
 const $btnEndTurno = document.getElementById("btnEndTurno");
 const $bankStatusText = document.querySelector("#bankStatus");
+const $btnCancel = document.querySelector("#btnCancel");
 
 const cajaId = localStorage.getItem("cajaId")
 const cajaNumero = localStorage.getItem("cajaNumero");
@@ -18,7 +19,7 @@ var skipTimeOut;
 
 
 const connection = new signalR.HubConnectionBuilder()
-    .withUrl(url, {
+    .withUrl(urlLocal, {
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets,
     })
@@ -31,6 +32,14 @@ $btnEndTurno.addEventListener("click", endTurno);
 $btnsAtender.forEach((btn) => {
     btn.addEventListener("click", atender);
 });
+
+$btnCancel.addEventListener("click", async function () {
+    if ($turnoActual.dataset.turno) {
+        disableButtons();
+        await connection.invoke("RemoveFromQueue", $turnoActual.dataset.turno);
+    }
+})
+
 
 async function atender(e) {
 
@@ -61,6 +70,18 @@ async function start() {
     }
 };
 
+connection.on("RemoveFromQueue", (turnoCancelado, siguienteTurno) => {
+    if (!siguienteTurno) {
+        $turnoActual.textContent = "No hay turno por atender";
+        return;
+    }
+
+    if (turnoCancelado && siguienteTurno) {
+        $turnoActual.textContent = `Turno: ${siguienteTurno.codigoTurno}`;
+        $turnoActual.dataset.turno = siguienteTurno.codigoTurno;
+    }
+})
+
 connection.onclose(async () => {
     await start();
 });
@@ -87,6 +108,9 @@ connection.on("SetBankStatus", (status) => {
         btnNext.style.opacity = 1;
         $bankStatusText.textContent = "Banco abierto";
         $bankStatusText.style.color = "green";
+        $btnCancel.disabled = false;
+        $btnCancel.style.cursor = "inherit";
+        $btnCancel.style.opacity = 1;
 
         $btnsAtender.forEach((btn) => {
             btn.disabled = false;
@@ -105,6 +129,10 @@ connection.on("GetBankStatus", (status) => {
         btnNext.disabled = true;
         btnNext.style.cursor = "not-allowed";
         btnNext.style.opacity = 0.5;
+        $btnCancel.disabled = true;
+        $bankCancel.style.cursor = "not-allowed";
+        $bankCancel.style.opacity = 0.5;
+
         $bankStatusText.textContent = "Banco cerrado";
         $bankStatusText.style.color = "red";
 
@@ -122,6 +150,9 @@ connection.on("GetBankStatus", (status) => {
         btnNext.disabled = false;
         btnNext.style.cursor = "inherit";
         btnNext.style.opacity = 1;
+        $btnCancel.disabled = false;
+        $btnCancel.style.cursor = "inherit";
+        $btnCancel.style.opacity = 1;
         $bankStatusText.textContent = "Banco abierto";
         $bankStatusText.style.color = "green";
 
@@ -175,7 +206,7 @@ connection.on("SkipTurn", (turno, siguienteTurno) => {
         return;
     }
 
-    if (turno, siguienteTurno) {
+    if (turno && siguienteTurno) {
         $turnoActual.textContent = `Turno: ${siguienteTurno.codigoTurno}`;
         $turnoActual.dataset.turno = siguienteTurno.codigoTurno;
     }
@@ -192,34 +223,22 @@ connection.on("GetCurrentTurn", (turno) => {
 })
 
 
+
 btnNext.addEventListener("click", async () => {
     const cajaId = localStorage.getItem("cajaId");
     const cajaNumero = localStorage.getItem("cajaNumero");
     if (cajaId) {
-        btnNext.disabled = true;
-        btnNext.style.cursor = "not-allowed";
-        btnNext.style.opacity = 0.5;
-        $btnSkipTurno.disabled = true;
-        $btnSkipTurno.style.cursor = "not-allowed";
-        $btnSkipTurno.style.opacity = 0.5;
+        disableButtons();
         await connection.invoke("SetCurrentTurn", (+cajaId));
     }
 
-  nextTimeOut = setTimeout(() => {
-        btnNext.disabled = false;
-        btnNext.style.opacity = 1;
-        btnNext.style.cursor = "inherit"
-
-        $btnSkipTurno.disabled = false;
-        $btnSkipTurno.style.opacity = 1;
-        $btnSkipTurno.style.cursor = "inherit"
-
-    }, 10000)
+   
 });
 
 
 $btnSkipTurno.addEventListener("click", async () => {
     if ($turnoActual.dataset.turno) {
+        disableButtons();
         await connection.invoke("SkipTurn", $turnoActual.dataset.turno);
     }
 });
@@ -255,6 +274,34 @@ function init() {
         $caja.textContent = `Caja: ${cajaNumero}`;
     }
 
+}
+
+function disableButtons() {
+    btnNext.disabled = true;
+    btnNext.style.cursor = "not-allowed";
+    btnNext.style.opacity = 0.5;
+    $btnSkipTurno.disabled = true;
+    $btnSkipTurno.style.cursor = "not-allowed";
+    $btnSkipTurno.style.opacity = 0.5;
+    $btnCancel.disabled = true;
+    $btnCancel.style.cursor = "not-allowed";
+    $btnCancel.style.opacity = 0.5;
+
+    nextTimeOut = setTimeout(() => {
+        btnNext.disabled = false;
+        btnNext.style.opacity = 1;
+        btnNext.style.cursor = "inherit"
+
+        $btnSkipTurno.disabled = false;
+        $btnSkipTurno.style.opacity = 1;
+        $btnSkipTurno.style.cursor = "inherit"
+
+        $btnCancel.disabled = false;
+        $btnCancel.style.opacity = 1;
+        $btnCancel.style.cursor = "inherit"
+
+
+    }, 10000)
 }
 
 
