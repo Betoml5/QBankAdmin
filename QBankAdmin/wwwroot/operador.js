@@ -122,6 +122,7 @@ connection.on("SetBankStatus", (status) => {
 })
 
 connection.on("GetBankStatus", (status) => {
+    console.log("El estado del banco es: ", status);
     if (status === 0) {
         $btnSkipTurno.disabled = true;
         $btnSkipTurno.style.cursor = "not-allowed";
@@ -130,8 +131,8 @@ connection.on("GetBankStatus", (status) => {
         btnNext.style.cursor = "not-allowed";
         btnNext.style.opacity = 0.5;
         $btnCancel.disabled = true;
-        $bankCancel.style.cursor = "not-allowed";
-        $bankCancel.style.opacity = 0.5;
+        $btnCancel.style.cursor = "not-allowed";
+        $btnCancel.style.opacity = 0.5;
 
         $bankStatusText.textContent = "Banco cerrado";
         $bankStatusText.style.color = "red";
