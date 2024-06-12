@@ -25,5 +25,10 @@ namespace QBankAdmin.Areas.Operador.Controllers
 
             return View(vm);
         }
+
+        public IActionResult CerrarSesion()
+        {
+            return RedirectToAction("Index", "Login", new { area = "" });
+        }
     }
 }

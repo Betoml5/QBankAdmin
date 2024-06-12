@@ -35,6 +35,14 @@ body {
     box-shadow: 0 20px 20px rgba(0, 0, 0, 0.1);
 }
 
+.header a {
+    text-decoration: none; 
+    color: white;
+    padding: 0 20px;
+}
+
+    
+
     .header nav ul {
         display: flex;
         justify-content: space-between;
@@ -50,6 +58,9 @@ body {
                 color: var(--secondary-color);
                 text-decoration: none;
             }
+
+
+    
 
 .container {
     background-color:white;

@@ -33,17 +33,13 @@ namespace QBankAdmin.Areas.Admin.Controllers
                 if (resultado.IsValid)
                 {
                     var usuariocreado = await usuarioService.Create(vm.Usuario);
-                    if (usuariocreado != null)
-                    {
-                        return RedirectToAction("Index", "Home", new { area = "Admin" });
-                    }
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
                 }
                 else
                 {
                    vm.Errores = resultado.Errors.Select(x => x.ErrorMessage).ToList();
                    return View(vm);
                 }
-            return View();
         }
 
 
